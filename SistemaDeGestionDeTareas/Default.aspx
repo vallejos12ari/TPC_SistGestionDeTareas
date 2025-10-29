@@ -1,44 +1,39 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="SistemaDeGestionDeTareas._Default" %>
 
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="ContenidoHome" ContentPlaceHolderID="MainContent" runat="server">
 
-    <main>
-        <section class="row" aria-labelledby="aspnetTitle">
-            <h1 id="aspnetTitle">ASP.NET</h1>
-            <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-            <p><a href="http://www.asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-        </section>
+    <div class="text-center" style="padding: 40px 0;">
+        <h1 class="display-4">Panel Principal</h1>
+        <p class="lead">Seleccione una opción para comenzar a gestionar el sistema.</p>
+    </div>
 
-        <div class="row">
-            <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-                <h2 id="gettingStartedTitle">Getting started</h2>
-                <p>
-                    ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-                A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301948">Learn more &raquo;</a>
-                </p>
-            </section>
-            <section class="col-md-4" aria-labelledby="librariesTitle">
-                <h2 id="librariesTitle">Get more libraries</h2>
-                <p>
-                    NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
-                </p>
-            </section>
-            <section class="col-md-4" aria-labelledby="hostingTitle">
-                <h2 id="hostingTitle">Web Hosting</h2>
-                <p>
-                    You can easily find a web hosting company that offers the right mix of features and price for your applications.
-                </p>
-                <p>
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301950">Learn more &raquo;</a>
-                </p>
-            </section>
+    <hr class="my-4" />
+
+    <div class="row justify-content-center g-4">
+
+
+        <div class="col-md-4">
+            <div class="d-grid">
+                <a href="~/Usuarios.aspx" runat="server" class="btn btn-primary btn-lg p-4">Gestionar Usuarios
+                </a>
+            </div>
         </div>
-    </main>
 
+
+        <div class="col-md-4">
+            <div class="d-grid">
+                <a href="~/Tareas.aspx" runat="server" class="btn btn-secondary btn-lg p-4">Gestionar Tareas
+                </a>
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            <div class="d-grid">
+                <a href="~/Login.aspx" runat="server" class="btn btn-danger btn-lg p-4">Salir
+                </a>
+            </div>
+        </div>
+
+    </div>
 </asp:Content>
