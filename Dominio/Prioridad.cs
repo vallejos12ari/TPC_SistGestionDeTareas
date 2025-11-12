@@ -8,7 +8,7 @@ namespace Dominio
 {
     public class Prioridad
     {
-        public int IdPrioridad {  get; set; }
+        public int IdPrioridad { get; set; }
         public string NombrePrioridad { get; set; }
         public override string ToString() => NombrePrioridad;
     }

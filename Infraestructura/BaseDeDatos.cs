@@ -10,7 +10,6 @@ namespace Infraestructura
 {
     public class BaseDeDatos
     {
-
         private static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["DATABASE"].ConnectionString;
 
         public static SqlConnection ObtenerConexion()

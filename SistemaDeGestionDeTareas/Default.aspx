@@ -14,7 +14,7 @@
 
         <div class="col-md-4">
             <div class="d-grid">
-                <a href="~/Usuarios.aspx" runat="server" class="btn btn-primary btn-lg p-4">Gestionar Usuarios
+                <a href="~/Usuarios.aspx" runat="server" class="btn btn-primary btn-lg p-4">Usuarios
                 </a>
             </div>
         </div>
@@ -22,15 +22,7 @@
 
         <div class="col-md-4">
             <div class="d-grid">
-                <a href="~/Tareas.aspx" runat="server" class="btn btn-secondary btn-lg p-4">Gestionar Tareas
-                </a>
-            </div>
-        </div>
-
-
-        <div class="col-md-4">
-            <div class="d-grid">
-                <a href="~/Login.aspx" runat="server" class="btn btn-danger btn-lg p-4">Salir
+                <a href="~/Tareas.aspx" runat="server" class="btn btn-secondary btn-lg p-4">Tareas
                 </a>
             </div>
         </div>

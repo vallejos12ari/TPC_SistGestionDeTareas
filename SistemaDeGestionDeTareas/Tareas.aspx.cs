@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Dominio;
 
 namespace SistemaDeGestionDeTareas
 {
@@ -11,7 +12,11 @@ namespace SistemaDeGestionDeTareas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Usuario usuario = (Usuario)Session["UsuarioActual"];
+            if (usuario.Rol != "Admin")
+            {
+                Response.Redirect("MisTareas.aspx");
+            }
         }
     }
 }

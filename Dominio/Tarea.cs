@@ -18,7 +18,7 @@ namespace Dominio
         public bool Activo { get; set; }
         public DateTime FechaCreacion { get; set; }
         public DateTime FechaVencimiento { get; set; }
-        public DateTime FechaActualizacion { get; set;}
+        public DateTime FechaActualizacion { get; set; }
 
 
         public Estado Estado { get; set; }

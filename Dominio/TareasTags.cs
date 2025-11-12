@@ -8,12 +8,10 @@ namespace Dominio
 {
     public class TareasTags
     {
-        public int IdTarea {  get; set; }
+        public int IdTarea { get; set; }
         public int IdTag { get; set; }
 
         public Tarea Tarea { get; set; }
         public Tag Tag { get; set; }
-
-
     }
 }
