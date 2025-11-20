@@ -43,7 +43,7 @@ CREATE TABLE USUARIO (
     Email NVARCHAR(150) NOT NULL UNIQUE,
     ContraseniaHash NVARCHAR(256) NOT NULL,
     Rol NVARCHAR(20) NOT NULL,
-    Activo BIT NOT NULL DEFAULT 1, -- 1 = activo, 0 = baja lógica
+    Activo BIT NOT NULL DEFAULT 1, -- 1 = activo, 0 = baja lgica
     FechaCreacion DATETIME NOT NULL DEFAULT GETDATE(),
     FechaActualizacion DATETIME NULL
 );
@@ -69,10 +69,10 @@ CREATE TABLE TAREA (
     IdEstado INT NOT NULL,
     IdPrioridad INT NOT NULL,
     IdUsuarioCreador INT NOT NULL,
-    IdUsuarioAsignado INT NULL, -- Es NULL si la tarea no está asignada a nadie
+    IdUsuarioAsignado INT NULL, -- Es NULL si la tarea no est asignada a nadie
     Titulo NVARCHAR(150) NOT NULL,
     Descripcion NVARCHAR(MAX) NULL,
-    Activo BIT NOT NULL DEFAULT 1, -- 1 = activa, 0 = baja lógica
+    Activo BIT NOT NULL DEFAULT 1, -- 1 = activa, 0 = baja lgica
     FechaCreacion DATETIME NOT NULL DEFAULT GETDATE(),
     FechaVencimiento DATETIME NULL,
     FechaActualizacion DATETIME NULL,
@@ -109,4 +109,13 @@ CREATE TABLE TareasTags (
     -- FKs a TAREA y TAG
     CONSTRAINT FK_TareasTags_Tarea FOREIGN KEY (IdTarea) REFERENCES TAREA(IdTarea),
     CONSTRAINT FK_TareasTags_Tag FOREIGN KEY (IdTag) REFERENCES TAG(IdTag)
+);
+
+-- ORDEN_ESTADOS
+CREATE TABLE ORDEN_ESTADOS (
+    IdOrden INT PRIMARY KEY IDENTITY(1,1),
+    IdEstadoActual INT NOT NULL,
+    IdEstadoDestino INT NOT NULL,
+    CONSTRAINT FK_Orden_EstadoActual FOREIGN KEY (IdEstadoActual) REFERENCES ESTADO(IdEstado),
+    CONSTRAINT FK_Orden_EstadoDestino FOREIGN KEY (IdEstadoDestino) REFERENCES ESTADO(IdEstado)
 );

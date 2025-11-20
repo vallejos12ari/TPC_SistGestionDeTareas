@@ -44,6 +44,7 @@
     <Compile Include="AutenticacionToken.cs" />
     <Compile Include="Estado.cs" />
     <Compile Include="Imagen.cs" />
+    <Compile Include="OrdenEstado.cs" />
     <Compile Include="Prioridad.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="Tarea.cs" />
