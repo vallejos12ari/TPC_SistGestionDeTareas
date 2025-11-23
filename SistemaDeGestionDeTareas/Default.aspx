@@ -5,6 +5,7 @@
     <div class="text-center" style="padding: 40px 0;">
         <h1 class="display-4">Panel Principal</h1>
         <p class="lead">Seleccione una opción para comenzar a gestionar el sistema.</p>
+          <asp:Button ID="btnPruebaPrioridades" runat="server" Text="Prioridades" CssClass="btn btn-success btn-sm" OnClick="btnPruebaPrioridades_Click" />
     </div>
 
     <hr class="my-4" />

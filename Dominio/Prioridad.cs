@@ -11,6 +11,7 @@ namespace Dominio
         public int IdPrioridad { get; set; }
         public string NombrePrioridad { get; set; }
         public int Nivel { get; set; }
+        public string Color { get; set; }
         public override string ToString() => NombrePrioridad;
     }
 }

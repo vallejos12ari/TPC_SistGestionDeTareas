@@ -29,5 +29,10 @@ namespace SistemaDeGestionDeTareas
             //  Response.Redirect("MisTareas.aspx");
             //}
         }
+
+        protected void btnPruebaPrioridades_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Prioridades.aspx");
+        }
     }
 }

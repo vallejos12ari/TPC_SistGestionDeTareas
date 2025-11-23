@@ -15,17 +15,12 @@ namespace SistemaDeGestionDeTareas
     {
 
         /// <summary>
-        /// Master property.
+        /// btnPruebaPrioridades control.
         /// </summary>
         /// <remarks>
-        /// Auto-generated property.
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        public new SistemaDeGestionDeTareas.SiteMaster Master
-        {
-            get
-            {
-                return ((SistemaDeGestionDeTareas.SiteMaster)(base.Master));
-            }
-        }
+        protected global::System.Web.UI.WebControls.Button btnPruebaPrioridades;
     }
 }

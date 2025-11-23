@@ -31,19 +31,5 @@ namespace SistemaDeGestionDeTareas
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvUsuarios;
-
-        /// <summary>
-        /// Master property.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated property.
-        /// </remarks>
-        public new SistemaDeGestionDeTareas.SiteMaster Master
-        {
-            get
-            {
-                return ((SistemaDeGestionDeTareas.SiteMaster)(base.Master));
-            }
-        }
     }
 }

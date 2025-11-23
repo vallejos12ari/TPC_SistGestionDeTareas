@@ -16,7 +16,7 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT IdPrioridad, NombrePrioridad, Nivel FROM PRIORIDAD");
+                datos.setearConsulta("SELECT IdPrioridad, NombrePrioridad, Nivel, Color FROM PRIORIDAD");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -25,6 +25,7 @@ namespace Negocio
                     aux.IdPrioridad = (int)datos.Lector["IdPrioridad"];
                     aux.NombrePrioridad = (string)datos.Lector["NombrePrioridad"];
                     aux.Nivel = (int)datos.Lector["Nivel"];
+                    aux.Color = datos.Lector["Color"] != DBNull.Value ? (string)datos.Lector["Color"] : null;
 
                     lista.Add(aux);
                 }
@@ -43,9 +44,11 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("INSERT INTO PRIORIDAD (NombrePrioridad, Nivel) VALUES (@nombre, @nivel)");
+                datos.setearConsulta("INSERT INTO PRIORIDAD (NombrePrioridad, Nivel, Color) VALUES (@nombre, @nivel, @color)");
                 datos.setearParametro("@nombre", prioridad.NombrePrioridad);
                 datos.setearParametro("@nivel", prioridad.Nivel);
+                datos.setearParametro("@color", prioridad.Color);
+
                 datos.ejecutarAccion();
             }
             finally
@@ -60,9 +63,10 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("UPDATE PRIORIDAD SET NombrePrioridad=@nombre, Nivel=@nivel WHERE IdPrioridad=@id");
+                datos.setearConsulta("UPDATE PRIORIDAD SET NombrePrioridad=@nombre, Nivel=@nivel, Color=@color WHERE IdPrioridad=@id");
                 datos.setearParametro("@nombre", prioridad.NombrePrioridad);
                 datos.setearParametro("@nivel", prioridad.Nivel);
+                datos.setearParametro("@color", prioridad.Color);
                 datos.setearParametro("@id", prioridad.IdPrioridad);
                 datos.ejecutarAccion();
             }
@@ -81,6 +85,10 @@ namespace Negocio
                 datos.setearConsulta("DELETE FROM PRIORIDAD WHERE IdPrioridad=@id");
                 datos.setearParametro("@id", id);
                 datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al eliminar la prioridad", ex);
             }
             finally
             {
