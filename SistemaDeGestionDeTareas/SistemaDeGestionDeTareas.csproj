@@ -118,9 +118,12 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="CrearPrioridad.aspx" />
+    <Content Include="CrearTag.aspx" />
     <Content Include="CrearUsuario.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="EditarPrioridad.aspx" />
+    <Content Include="EditarTag.aspx" />
     <Content Include="EditarUsuario.aspx" />
     <Content Include="Estados.aspx" />
     <Content Include="favicon.ico" />
@@ -210,6 +213,20 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CrearPrioridad.aspx.cs">
+      <DependentUpon>CrearPrioridad.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CrearPrioridad.aspx.designer.cs">
+      <DependentUpon>CrearPrioridad.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CrearTag.aspx.cs">
+      <DependentUpon>CrearTag.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CrearTag.aspx.designer.cs">
+      <DependentUpon>CrearTag.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CrearUsuario.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>CrearUsuario.aspx</DependentUpon>
@@ -230,6 +247,13 @@
     </Compile>
     <Compile Include="EditarPrioridad.aspx.designer.cs">
       <DependentUpon>EditarPrioridad.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditarTag.aspx.cs">
+      <DependentUpon>EditarTag.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarTag.aspx.designer.cs">
+      <DependentUpon>EditarTag.aspx</DependentUpon>
     </Compile>
     <Compile Include="EditarUsuario.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>

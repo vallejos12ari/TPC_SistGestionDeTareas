@@ -1,19 +1,17 @@
-﻿<%@ Page Title="Editar Prioridad" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true"
-    CodeBehind="EditarPrioridad.aspx.cs" Inherits="SistemaDeGestionDeTareas.EditarPrioridad" %>
+﻿<%@ Page Title="Crear Prioridad" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true"
+    CodeBehind="CrearPrioridad.aspx.cs" Inherits="SistemaDeGestionDeTareas.CrearPrioridad" %>
 
-<asp:Content ID="ContenidoEditarPrioridad" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="ContenidoCrearPrioridad" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Editar prioridad</h2>
-    <p>Modifique los campos y guarde los cambios.</p>
-
-    <asp:HiddenField ID="hfIdPrioridad" runat="server" />
+    <h2>Crear nueva prioridad</h2>
+    <p>Complete los datos para crear una prioridad personalizada.</p>
 
     <div class="card">
         <div class="card-body">
 
             <!-- Nombre -->
             <div class="mb-3">
-                <label class="form-label">Nombre</label>
+                <label class="form-label">Nombre de la prioridad</label>
                 <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" />
                 <asp:RequiredFieldValidator ID="rfvNombre" runat="server"
                     ControlToValidate="txtNombre"
@@ -41,17 +39,17 @@
                     CssClass="text-danger" Display="Dynamic" />
             </div>
 
-            <asp:Button ID="btnGuardar" runat="server" Text="Guardar cambios"
+            <!-- Botones -->
+            <asp:Button ID="btnGuardar" runat="server" Text="Guardar"
                 CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
 
             <asp:Button ID="btnCancelar" runat="server" Text="Cancelar"
-                CssClass="btn btn-secondary ms-2" CausesValidation="false"
-                OnClick="btnCancelar_Click" />
+                CssClass="btn btn-secondary ms-2"
+                CausesValidation="false" OnClick="btnCancelar_Click"/>
 
         </div>
     </div>
 
-    <asp:ValidationSummary ID="vsErrores" runat="server"
-        CssClass="text-danger mt-3" />
+    <asp:ValidationSummary ID="vsErrores" runat="server" CssClass="text-danger mt-3" />
 
 </asp:Content>

@@ -6,6 +6,7 @@
         <h1 class="display-4">Panel Principal</h1>
         <p class="lead">Seleccione una opción para comenzar a gestionar el sistema.</p>
           <asp:Button ID="btnPruebaPrioridades" runat="server" Text="Prioridades" CssClass="btn btn-success btn-sm" OnClick="btnPruebaPrioridades_Click" />
+         <asp:Button ID="btnPruebaTags" runat="server" Text="Tags" CssClass="btn btn-success btn-sm" OnClick="btnPruebaTags_Click" />
     </div>
 
     <hr class="my-4" />

@@ -11,17 +11,17 @@ namespace SistemaDeGestionDeTareas
 {
 
 
-    public partial class EditarPrioridad
+    public partial class EditarTag
     {
 
         /// <summary>
-        /// hfIdPrioridad control.
+        /// hfIdTag control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfIdPrioridad;
+        protected global::System.Web.UI.WebControls.HiddenField hfIdTag;
 
         /// <summary>
         /// txtNombre control.
@@ -42,24 +42,6 @@ namespace SistemaDeGestionDeTareas
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNombre;
 
         /// <summary>
-        /// txtNivel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNivel;
-
-        /// <summary>
-        /// rfvNivel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNivel;
-
-        /// <summary>
         /// txtColor control.
         /// </summary>
         /// <remarks>
@@ -67,15 +49,6 @@ namespace SistemaDeGestionDeTareas
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txtColor;
-
-        /// <summary>
-        /// rfvColor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvColor;
 
         /// <summary>
         /// btnGuardar control.

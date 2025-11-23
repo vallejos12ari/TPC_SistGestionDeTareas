@@ -18,33 +18,40 @@
             DataKeyNames="IdTag"
             OnRowCommand="gvTags_RowCommand">
             
-            <Columns>
+           <Columns>
 
-                <asp:BoundField DataField="IdTag" HeaderText="ID" />
+    <asp:BoundField DataField="IdTag" HeaderText="ID" />
 
-                <asp:BoundField DataField="Nombre" HeaderText="Nombre Tag" />
+    <asp:BoundField DataField="Nombre" HeaderText="Nombre Tag" />
 
-                <asp:TemplateField HeaderText="Acciones">
-                    <ItemTemplate>
+    <asp:TemplateField HeaderText="Color">
+        <ItemTemplate>
+            <div style="width:25px; height:25px; background-color:<%# Eval("Color") %>; border:1px solid #000;"></div>
+        </ItemTemplate>
+    </asp:TemplateField>
 
-                        <asp:LinkButton ID="btnEditar" runat="server"
-                            Text="Editar"
-                            CommandName="Editar"
-                            CommandArgument='<%# Eval("IdTag") %>'
-                            CssClass="btn btn-warning btn-sm me-2">
-                        </asp:LinkButton>
+    <asp:TemplateField HeaderText="Acciones">
+        <ItemTemplate>
 
-                        <asp:LinkButton ID="btnEliminar" runat="server"
-                            Text="Eliminar"
-                            CommandName="Eliminar"
-                            CommandArgument='<%# Eval("IdTag") %>'
-                            CssClass="btn btn-danger btn-sm">
-                        </asp:LinkButton>
+            <asp:LinkButton ID="btnEditar" runat="server"
+                Text="Editar"
+                CommandName="Editar"
+                CommandArgument='<%# Eval("IdTag") %>'
+                CssClass="btn btn-warning btn-sm me-2">
+            </asp:LinkButton>
 
-                    </ItemTemplate>
-                </asp:TemplateField>
+            <asp:LinkButton ID="btnEliminar" runat="server"
+                Text="Eliminar"
+                CommandName="Eliminar"
+                CommandArgument='<%# Eval("IdTag") %>'
+                CssClass="btn btn-danger btn-sm">
+            </asp:LinkButton>
 
-            </Columns>
+        </ItemTemplate>
+    </asp:TemplateField>
+
+</Columns>
+
 
         </asp:GridView>
 

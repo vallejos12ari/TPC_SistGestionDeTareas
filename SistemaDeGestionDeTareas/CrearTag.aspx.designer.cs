@@ -11,17 +11,8 @@ namespace SistemaDeGestionDeTareas
 {
 
 
-    public partial class EditarPrioridad
+    public partial class CrearTag
     {
-
-        /// <summary>
-        /// hfIdPrioridad control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfIdPrioridad;
 
         /// <summary>
         /// txtNombre control.
@@ -40,24 +31,6 @@ namespace SistemaDeGestionDeTareas
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNombre;
-
-        /// <summary>
-        /// txtNivel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNivel;
-
-        /// <summary>
-        /// rfvNivel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNivel;
 
         /// <summary>
         /// txtColor control.

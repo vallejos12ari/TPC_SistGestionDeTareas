@@ -34,5 +34,10 @@ namespace SistemaDeGestionDeTareas
         {
             Response.Redirect("Prioridades.aspx");
         }
+
+        protected void btnPruebaTags_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Tags.aspx");
+        }
     }
 }

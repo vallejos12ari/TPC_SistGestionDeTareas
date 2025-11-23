@@ -25,7 +25,7 @@ namespace SistemaDeGestionDeTareas
 
         protected void btnNuevo_Click(object sender, EventArgs e)
         {
-           // Response.Redirect("FormularioTag.aspx");
+            Response.Redirect("CrearTag.aspx");
         }
 
         protected void gvTags_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -34,7 +34,8 @@ namespace SistemaDeGestionDeTareas
 
             if (e.CommandName == "Editar")
             {
-                Response.Redirect("FormularioTag.aspx?id=" + id);
+                Response.Redirect("EditarTag.aspx?id=" + id);
+
             }
             else if (e.CommandName == "Eliminar")
             {

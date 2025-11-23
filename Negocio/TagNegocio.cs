@@ -16,7 +16,7 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT IdTag, Nombre FROM TAG");
+                datos.setearConsulta("SELECT IdTag, Nombre, Color  FROM TAG");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -24,6 +24,7 @@ namespace Negocio
                     Tag aux = new Tag();
                     aux.IdTag = (int)datos.Lector["IdTag"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Color = datos.Lector["Color"] == DBNull.Value ? null : (string)datos.Lector["Color"];
                     lista.Add(aux);
                 }
 
@@ -47,7 +48,7 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("SELECT IdTag, Nombre FROM TAG WHERE IdTag = @id");
+                datos.setearConsulta("SELECT IdTag, Nombre, Color FROM TAG WHERE IdTag = @id");
                 datos.setearParametro("@id", id);
                 datos.ejecutarLectura();
 
@@ -56,7 +57,8 @@ namespace Negocio
                     tag = new Tag
                     {
                         IdTag = (int)datos.Lector["IdTag"],
-                        Nombre = (string)datos.Lector["Nombre"]
+                        Nombre = (string)datos.Lector["Nombre"],
+                        Color = datos.Lector["Color"] == DBNull.Value ? null : (string)datos.Lector["Color"]
                     };
                 }
 
@@ -79,8 +81,9 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("INSERT INTO TAG (Nombre) VALUES (@nombre)");
+                datos.setearConsulta("INSERT INTO TAG (Nombre, Color) VALUES (@nombre, @color)");
                 datos.setearParametro("@nombre", tag.Nombre);
+                datos.setearParametro("@color", tag.Color);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
@@ -99,8 +102,9 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("UPDATE TAG SET Nombre = @nombre WHERE IdTag = @id");
+                datos.setearConsulta("UPDATE TAG SET Nombre = @nombre, Color = @color WHERE IdTag = @id");
                 datos.setearParametro("@nombre", tag.Nombre);
+                datos.setearParametro("@color", tag.Color);
                 datos.setearParametro("@id", tag.IdTag);
                 datos.ejecutarAccion();
             }
