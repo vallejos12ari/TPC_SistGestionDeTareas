@@ -191,6 +191,7 @@
     <Content Include="Site.Master" />
     <Content Include="Tags.aspx" />
     <Content Include="Tareas.aspx" />
+    <Content Include="TestEmail.aspx" />
     <Content Include="Usuarios.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -336,6 +337,13 @@
     </Compile>
     <Compile Include="Tareas.aspx.designer.cs">
       <DependentUpon>Tareas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestEmail.aspx.cs">
+      <DependentUpon>TestEmail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestEmail.aspx.designer.cs">
+      <DependentUpon>TestEmail.aspx</DependentUpon>
     </Compile>
     <Compile Include="Usuarios.aspx.cs">
       <DependentUpon>Usuarios.aspx</DependentUpon>

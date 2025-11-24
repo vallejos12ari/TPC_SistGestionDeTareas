@@ -44,5 +44,10 @@ namespace SistemaDeGestionDeTareas
         {
             Response.Redirect("ReporteRendimiento.aspx");
         }
+
+        protected void TestEmail_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("TestEmail.aspx");
+        }
     }
 }
