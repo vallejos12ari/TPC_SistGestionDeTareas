@@ -11,43 +11,52 @@ namespace SistemaDeGestionDeTareas
 {
 
 
-    public partial class _Default
+    public partial class TestEmail
     {
 
         /// <summary>
-        /// btnPruebaPrioridades control.
+        /// txtDestino control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPruebaPrioridades;
+        protected global::System.Web.UI.WebControls.TextBox txtDestino;
 
         /// <summary>
-        /// btnPruebaTags control.
+        /// txtTitulo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPruebaTags;
+        protected global::System.Web.UI.WebControls.TextBox txtTitulo;
 
         /// <summary>
-        /// btnPruebaRendimiento control.
+        /// txtAsignador control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPruebaRendimiento;
+        protected global::System.Web.UI.WebControls.TextBox txtAsignador;
 
         /// <summary>
-        /// TestEmail control.
+        /// btnProbar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button TestEmail;
+        protected global::System.Web.UI.WebControls.Button btnProbar;
+
+        /// <summary>
+        /// lblResultado control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblResultado;
     }
 }

@@ -11,7 +11,7 @@ namespace SistemaDeGestionDeTareas
 {
 
 
-    public partial class Usuarios
+    public partial class Prioridades
     {
 
         /// <summary>
@@ -24,12 +24,12 @@ namespace SistemaDeGestionDeTareas
         protected global::System.Web.UI.WebControls.Button btnCrear;
 
         /// <summary>
-        /// gvUsuarios control.
+        /// gvPrioridades control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvUsuarios;
+        protected global::System.Web.UI.WebControls.GridView gvPrioridades;
     }
 }

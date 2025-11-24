@@ -11,25 +11,16 @@ namespace SistemaDeGestionDeTareas
 {
 
 
-    public partial class Usuarios
+    public partial class ReporteRendimiento
     {
 
         /// <summary>
-        /// btnCrear control.
+        /// gvReporte control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCrear;
-
-        /// <summary>
-        /// gvUsuarios control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvUsuarios;
+        protected global::System.Web.UI.WebControls.GridView gvReporte;
     }
 }

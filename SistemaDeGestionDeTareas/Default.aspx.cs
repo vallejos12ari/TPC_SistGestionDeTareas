@@ -23,6 +23,31 @@ namespace SistemaDeGestionDeTareas
             {
                 Response.Redirect("MisTareas.aspx");
             }
+
+            //if (usuario.Rol != "Admin")
+            //{
+            //  Response.Redirect("MisTareas.aspx");
+            //}
+        }
+
+        protected void btnPruebaPrioridades_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Prioridades.aspx");
+        }
+
+        protected void btnPruebaTags_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Tags.aspx");
+        }
+
+        protected void btnPruebaRendimiento_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ReporteRendimiento.aspx");
+        }
+
+        protected void TestEmail_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("TestEmail.aspx");
         }
     }
 }

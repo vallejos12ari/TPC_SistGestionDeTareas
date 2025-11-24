@@ -118,8 +118,12 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="CrearPrioridad.aspx" />
+    <Content Include="CrearTag.aspx" />
     <Content Include="CrearUsuario.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="EditarPrioridad.aspx" />
+    <Content Include="EditarTag.aspx" />
     <Content Include="EditarUsuario.aspx" />
     <Content Include="Estados.aspx" />
     <Content Include="favicon.ico" />
@@ -127,6 +131,8 @@
     <Content Include="Login.aspx" />
     <Content Include="MisTareas.aspx" />
     <Content Include="OrdenEstados.aspx" />
+    <Content Include="Prioridades.aspx" />
+    <Content Include="ReporteRendimiento.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -183,7 +189,9 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
+    <Content Include="Tags.aspx" />
     <Content Include="Tareas.aspx" />
+    <Content Include="TestEmail.aspx" />
     <Content Include="Usuarios.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -207,6 +215,20 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CrearPrioridad.aspx.cs">
+      <DependentUpon>CrearPrioridad.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CrearPrioridad.aspx.designer.cs">
+      <DependentUpon>CrearPrioridad.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CrearTag.aspx.cs">
+      <DependentUpon>CrearTag.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CrearTag.aspx.designer.cs">
+      <DependentUpon>CrearTag.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CrearUsuario.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>CrearUsuario.aspx</DependentUpon>
@@ -220,6 +242,20 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditarPrioridad.aspx.cs">
+      <DependentUpon>EditarPrioridad.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarPrioridad.aspx.designer.cs">
+      <DependentUpon>EditarPrioridad.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditarTag.aspx.cs">
+      <DependentUpon>EditarTag.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarTag.aspx.designer.cs">
+      <DependentUpon>EditarTag.aspx</DependentUpon>
     </Compile>
     <Compile Include="EditarUsuario.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -259,7 +295,21 @@
     <Compile Include="OrdenEstados.aspx.designer.cs">
       <DependentUpon>OrdenEstados.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Prioridades.aspx.cs">
+      <DependentUpon>Prioridades.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Prioridades.aspx.designer.cs">
+      <DependentUpon>Prioridades.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReporteRendimiento.aspx.cs">
+      <DependentUpon>ReporteRendimiento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReporteRendimiento.aspx.designer.cs">
+      <DependentUpon>ReporteRendimiento.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -274,12 +324,26 @@
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
+    <Compile Include="Tags.aspx.cs">
+      <DependentUpon>Tags.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Tags.aspx.designer.cs">
+      <DependentUpon>Tags.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Tareas.aspx.cs">
       <DependentUpon>Tareas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Tareas.aspx.designer.cs">
       <DependentUpon>Tareas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TestEmail.aspx.cs">
+      <DependentUpon>TestEmail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestEmail.aspx.designer.cs">
+      <DependentUpon>TestEmail.aspx</DependentUpon>
     </Compile>
     <Compile Include="Usuarios.aspx.cs">
       <DependentUpon>Usuarios.aspx</DependentUpon>
