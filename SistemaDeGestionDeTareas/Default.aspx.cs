@@ -39,5 +39,10 @@ namespace SistemaDeGestionDeTareas
         {
             Response.Redirect("Tags.aspx");
         }
+
+        protected void btnPruebaRendimiento_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ReporteRendimiento.aspx");
+        }
     }
 }
