@@ -11,11 +11,18 @@ namespace SistemaDeGestionDeTareas
         {
             if (User?.Identity?.IsAuthenticated == true && !IsPostBack)
             {
-                if ( Session["UsuarioActual"] != null)
+                if (Session["UsuarioActual"] == null)
                 {
                     
+                    FormsAuthentication.SignOut();
+                    Response.Redirect("Login.aspx", endResponse: true); 
+                    return;
                 }
-                Response.Redirect("Default.aspx");
+                else
+                {
+                    
+                    Response.Redirect("Default.aspx");
+                }
             }
         }
 

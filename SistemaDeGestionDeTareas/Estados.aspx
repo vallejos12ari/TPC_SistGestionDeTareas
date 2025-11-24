@@ -2,11 +2,11 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container mt-4">
-        <h2>Gestión de Estados</h2>
+        <h2>Gestion de Estados</h2>
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <asp:Button ID="btnNuevoEstado" runat="server" Text="Nuevo Estado" CssClass="btn btn-primary" OnClick="btnNuevoEstado_Click" />
+                <asp:Button ID="btnNuevoEstado" runat="server" Text="Nuevo Estado" CssClass="btn btn-primary" OnClientClick="openEstadoModal(); return false;" />
                 <asp:Button ID="btnGestionarOrden" runat="server" Text="Gestionar Orden de Estados" CssClass="btn btn-info ms-2" OnClick="btnGestionarOrden_Click" />
             </div>
         </div>
@@ -19,6 +19,12 @@
                     <Columns>
                         <asp:BoundField DataField="IdEstado" HeaderText="ID" SortExpression="IdEstado" ReadOnly="True" />
                         <asp:BoundField DataField="NombreEstado" HeaderText="Nombre" SortExpression="NombreEstado" />
+                        <asp:TemplateField HeaderText="Color">
+                            <ItemTemplate>
+                                <div style="width: 20px; height: 20px; background-color: <%# Eval("Color") %>; border: 1px solid #ccc; display: inline-block; vertical-align: middle;"></div>
+                                <asp:Label ID="lblColorHex" runat="server" Text='<%# Eval("Color") %>' CssClass="ms-2"></asp:Label>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                         <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
                                 <asp:LinkButton ID="btnEditar" runat="server" CommandName="Editar" CommandArgument='<%# Eval("IdEstado") %>' CssClass="btn btn-sm btn-warning me-2">Editar</asp:LinkButton>
@@ -30,7 +36,7 @@
             </div>
         </div>
 
-        <!-- Modal para Crear/Editar Estado -->
+        
         <div class="modal fade" id="estadoModal" tabindex="-1" aria-labelledby="estadoModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -47,6 +53,10 @@
                             <asp:TextBox ID="txtNombreEstado" runat="server" CssClass="form-control"></asp:TextBox>
                             <asp:RequiredFieldValidator ID="rfvNombreEstado" runat="server" ControlToValidate="txtNombreEstado"
                                 ErrorMessage="El nombre del estado es obligatorio." Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
+                        </div>
+                        <div class="mb-3">
+                            <label for="<%= txtColorEstado.ClientID %>" class="form-label">Color del Estado</label>
+                            <asp:TextBox ID="txtColorEstado" runat="server" CssClass="form-control form-control-color" TextMode="Color" Value="#000000"></asp:TextBox>
                         </div>
                         <asp:HiddenField ID="hfIdEstado" runat="server" Value="0" />
                     </div>

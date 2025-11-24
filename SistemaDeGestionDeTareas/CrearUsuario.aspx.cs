@@ -9,6 +9,12 @@ namespace SistemaDeGestionDeTareas
         protected void Page_Load(object sender, EventArgs e)
         {
             Usuario usuario = (Usuario)Session["UsuarioActual"];
+            if (usuario == null)
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
+
             if (usuario.Rol != "Admin")
             {
                 Response.Redirect("MisTareas.aspx");

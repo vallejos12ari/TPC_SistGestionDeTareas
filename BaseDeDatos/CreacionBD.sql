@@ -9,6 +9,7 @@ GO
 CREATE TABLE ESTADO (
     IdEstado INT PRIMARY KEY IDENTITY(1,1),
     NombreEstado NVARCHAR(50) NOT NULL UNIQUE
+	Color NVARCHAR(10) NULL
 );
 
 
@@ -118,4 +119,13 @@ CREATE TABLE ORDEN_ESTADOS (
     IdEstadoDestino INT NOT NULL,
     CONSTRAINT FK_Orden_EstadoActual FOREIGN KEY (IdEstadoActual) REFERENCES ESTADO(IdEstado),
     CONSTRAINT FK_Orden_EstadoDestino FOREIGN KEY (IdEstadoDestino) REFERENCES ESTADO(IdEstado)
+);
+
+     CREATE TABLE USUARIO_RELACION (
+     IdUsuario INT NOT NULL,
+     IdUsuarioRelacionado INT NOT NULL,
+     CONSTRAINT PK_UsuarioRelacion PRIMARY KEY (IdUsuario, IdUsuarioRelacionado),
+     CONSTRAINT FK_UsuarioRelacion_Usuario FOREIGN KEY (IdUsuario) REFERENCES USUARIO(IdUsuario),
+     CONSTRAINT FK_UsuarioRelacion_UsuarioRelacionado FOREIGN KEY (IdUsuarioRelacionado) REFERENCES
+     USUARIO(IdUsuario)
 );

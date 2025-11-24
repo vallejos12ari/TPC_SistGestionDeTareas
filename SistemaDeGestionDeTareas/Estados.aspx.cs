@@ -12,11 +12,11 @@ namespace SistemaDeGestionDeTareas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Verificar si el usuario actual es administrador
+            
             Usuario usuario = (Usuario)Session["UsuarioActual"];
             if (usuario == null || usuario.Rol != "Admin")
             {
-                Response.Redirect("Login.aspx"); // Redirigir si no es admin
+                Response.Redirect("Login.aspx"); 
             }
 
             if (!IsPostBack)
@@ -40,11 +40,12 @@ namespace SistemaDeGestionDeTareas
     
                  if (e.CommandName == "Editar")
                  {
-                     Estado estado = negocio.Listar().Find(x => x.IdEstado == idEstado);
+                     Estado estado = negocio.ObtenerPorId(idEstado);
                      if (estado != null)
                      {
                          hfIdEstado.Value = estado.IdEstado.ToString();
                          txtNombreEstado.Text = estado.NombreEstado;
+                         txtColorEstado.Text = estado.Color; 
                          litModalTitle.Text = "Editar Estado";
                          ScriptManager.RegisterStartupScript(this, GetType(), "OpenModal", "openEstadoModal();", true);
                      }
@@ -58,17 +59,15 @@ namespace SistemaDeGestionDeTareas
                      }
                  catch (Exception ex)
                      {
-                         // Manejar error, por ejemplo, mostrar un mensaje al usuario                                              
-                         // lblError.Text = ex.Message;                                                                            
-                         // lblError.Visible = true;                                                                               
                          ScriptManager.RegisterStartupScript(this, GetType(), "ShowError", $"alert('Error al eliminar el estado:{ex.Message.Replace("'", "\\'")}')", true);                                                                                   
                      }                                                                                                             
                  }                                                                                                                 
              }
         protected void btnNuevoEstado_Click(object sender, EventArgs e)
              {
-                 hfIdEstado.Value = "0"; // Indicar que es un nuevo estado
+                 hfIdEstado.Value = "0"; 
                  txtNombreEstado.Text = string.Empty;
+                 txtColorEstado.Text = "#000000";
                  litModalTitle.Text = "Nuevo Estado";
                  ScriptManager.RegisterStartupScript(this, GetType(), "OpenModal", "openEstadoModal();", true);
              }
@@ -80,12 +79,13 @@ namespace SistemaDeGestionDeTareas
                  EstadoNegocio negocio = new EstadoNegocio();
                  Estado estado = new Estado
                  {
-                     NombreEstado = txtNombreEstado.Text.Trim()
+                     NombreEstado = txtNombreEstado.Text.Trim(),
+                     Color = txtColorEstado.Text.Trim() 
                  };
     
                  if (int.TryParse(hfIdEstado.Value, out int id) && id > 0)
                  {
-                     // Modificar
+                     
                      estado.IdEstado = id;
                      try
                      {
@@ -99,7 +99,7 @@ namespace SistemaDeGestionDeTareas
                  }
                  else
                 {
-                     // Agregar
+                     
                     try
                     {                                                                                                                                                                                                                    
                         negocio.Agregar(estado);                                                                                                                                                                                         

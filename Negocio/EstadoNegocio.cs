@@ -7,20 +7,21 @@ namespace Negocio
 {
     public class EstadoNegocio
     {
-        // Métodos para la entidad ESTADO
+        
         public List<Estado> Listar()
         {
             List<Estado> lista = new List<Estado>();
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("SELECT IdEstado, NombreEstado FROM ESTADO");
+                datos.setearConsulta("SELECT IdEstado, NombreEstado, Color FROM ESTADO");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
                     Estado aux = new Estado();
                     aux.IdEstado = (int)datos.Lector["IdEstado"];
                     aux.NombreEstado = (string)datos.Lector["NombreEstado"];
+                    aux.Color = datos.Lector["Color"] is DBNull ? "#FFFFFF" : (string)datos.Lector["Color"];
                     lista.Add(aux);
                 }
                 return lista;
@@ -40,8 +41,9 @@ namespace Negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("INSERT INTO ESTADO (NombreEstado) VALUES (@NombreEstado)");
+                datos.setearConsulta("INSERT INTO ESTADO (NombreEstado, Color) VALUES (@NombreEstado, @Color)");
                 datos.setearParametro("@NombreEstado", nuevoEstado.NombreEstado);
+                datos.setearParametro("@Color", nuevoEstado.Color ?? "#FFFFFF"); 
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
@@ -59,8 +61,9 @@ namespace Negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("UPDATE ESTADO SET NombreEstado = @NombreEstado WHERE IdEstado = @IdEstado");
+                datos.setearConsulta("UPDATE ESTADO SET NombreEstado = @NombreEstado, Color = @Color WHERE IdEstado = @IdEstado");
                 datos.setearParametro("@NombreEstado", estado.NombreEstado);
+                datos.setearParametro("@Color", estado.Color ?? "#FFFFFF"); 
                 datos.setearParametro("@IdEstado", estado.IdEstado);
                 datos.ejecutarAccion();
             }
@@ -74,18 +77,46 @@ namespace Negocio
             }
         }
 
+        public Estado ObtenerPorId(int idEstado)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT IdEstado, NombreEstado, Color FROM ESTADO WHERE IdEstado = @IdEstado");
+                datos.setearParametro("@IdEstado", idEstado);
+                datos.ejecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    Estado aux = new Estado();
+                    aux.IdEstado = (int)datos.Lector["IdEstado"];
+                    aux.NombreEstado = (string)datos.Lector["NombreEstado"];
+                    aux.Color = datos.Lector["Color"] is DBNull ? "#FFFFFF" : (string)datos.Lector["Color"];
+                    return aux;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener estado por ID", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public void Eliminar(int idEstado)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                // Primero, eliminar las transiciones de estado relacionadas
+                
                 datos.setearConsulta("DELETE FROM ORDEN_ESTADOS WHERE IdEstadoActual = @IdEstado OR IdEstadoDestino = @IdEstado");
                 datos.setearParametro("@IdEstado", idEstado);
                 datos.ejecutarAccion();
-                datos.cerrarConexion(); // Cerrar y reabrir para la siguiente consulta
+                datos.cerrarConexion(); 
 
-                datos = new AccesoDatos(); // Nueva instancia para la segunda consulta
+                datos = new AccesoDatos();
                 datos.setearConsulta("DELETE FROM ESTADO WHERE IdEstado = @IdEstado");
                 datos.setearParametro("@IdEstado", idEstado);
                 datos.ejecutarAccion();
@@ -100,7 +131,7 @@ namespace Negocio
             }
         }
 
-        // Métodos para la entidad ORDEN_ESTADOS
+        
         public List<OrdenEstado> ListarOrdenEstados()
         {
             List<OrdenEstado> lista = new List<OrdenEstado>();

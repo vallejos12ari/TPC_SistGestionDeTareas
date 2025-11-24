@@ -11,5 +11,6 @@ namespace Dominio
         public int IdEstado { get; set; }
         public string NombreEstado { get; set; }
         public override string ToString() => NombreEstado;
+        public string Color { get; set; } 
     }
 }

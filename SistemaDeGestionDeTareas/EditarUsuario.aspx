@@ -32,7 +32,7 @@
             <div class="mb-3">
                 <label for="txtPassword" class="form-label">Contraseña (dejar en blanco para no cambiar)</label>
                 <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" TextMode="Password" />
-                <!-- sin Required: cambiar contraseña es opcional -->
+
             </div>
 
             <div class="mb-3">
@@ -66,4 +66,42 @@
 
     <asp:ValidationSummary ID="vsErrores" runat="server"
         CssClass="text-danger mt-3" ValidationGroup="EditarUsuario" />
+
+    <hr />
+    <h3>Usuarios Relacionados</h3>
+
+ 
+    <asp:GridView ID="gvUsuariosRelacionados" runat="server" AutoGenerateColumns="False"
+        CssClass="table table-bordered table-striped" OnRowCommand="gvUsuariosRelacionados_RowCommand">
+        <Columns>
+            <asp:BoundField DataField="NombreUsuario" HeaderText="Nombre de Usuario" />
+            <asp:BoundField DataField="Email" HeaderText="Email" />
+            <asp:TemplateField HeaderText="Acciones">
+                <ItemTemplate>
+                    <asp:LinkButton ID="btnEliminarRelacion" runat="server"
+                        CommandName="Eliminar"
+                        CommandArgument='<%# Eval("IdUsuario") %>'
+                        Text="Quitar Relación"
+                        CssClass="btn btn-danger btn-sm"
+                        OnClientClick="return confirm('¿Está seguro de que desea quitar esta relación?');" />
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+        <EmptyDataTemplate>
+            <div class="alert alert-info">No hay usuarios relacionados.</div>
+        </EmptyDataTemplate>
+    </asp:GridView>
+
+    <br />
+
+    
+    <h4>Agregar Nueva Relación</h4>
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="ddlUsuariosDisponibles">Seleccionar Usuario:</label>
+            <asp:DropDownList ID="ddlUsuariosDisponibles" runat="server" CssClass="form-control mx-2"></asp:DropDownList>
+        </div>
+        <asp:Button ID="btnAgregarRelacion" runat="server" Text="Agregar Relación" CssClass="btn btn-primary" OnClick="btnAgregarRelacion_Click" />
+    </div>
+
 </asp:Content>

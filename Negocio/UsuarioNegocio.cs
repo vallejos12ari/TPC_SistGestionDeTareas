@@ -94,8 +94,7 @@ namespace Negocio
                 datos.setearConsulta(@"
             SELECT IdUsuario, NombreUsuario, Email, Rol, Activo
             FROM USUARIO
-            WHERE IdUsuario = @IdUsuario
-        ");
+            WHERE IdUsuario = @IdUsuario");
                 datos.setearParametro("@IdUsuario", idUsuario);
                 datos.ejecutarLectura();
 
@@ -109,6 +108,9 @@ namespace Negocio
                         Rol = datos.Lector["Rol"] as string,
                         Activo = Convert.ToBoolean(datos.Lector["Activo"]),
                     };
+
+                    u.UsuariosRelacionados = ListarRelacionados(u.IdUsuario);
+
                     return u;
                 }
 
@@ -206,5 +208,91 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+
+
+
+        public List<Usuario> ListarRelacionados(int idUsuario)
+        {
+            List<Usuario> lista = new List<Usuario>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta(@" SELECT U.IdUsuario, U.NombreUsuario, U.Email, U.Rol
+                         FROM USUARIO U
+                      INNER JOIN USUARIO_RELACION UR ON U.IdUsuario = UR.IdUsuarioRelacionado
+                        WHERE UR.IdUsuario = @idUsuario");
+
+                datos.setearParametro("@idUsuario", idUsuario);
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    Usuario aux = new Usuario();
+                    aux.IdUsuario = (int)datos.Lector["IdUsuario"];
+                    aux.NombreUsuario = (string)datos.Lector["NombreUsuario"];
+                    aux.Email = (string)datos.Lector["Email"];
+                    aux.Rol = (string)datos.Lector["Rol"];
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void AgregarRelacion(int idUsuario, int idUsuarioRelacionado)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+
+                if (idUsuario == idUsuarioRelacionado)
+                    return;
+
+                datos.setearConsulta("INSERT INTO USUARIO_RELACION (IdUsuario, IdUsuarioRelacionado) VALUES (@idUsuario, @idUsuarioRelacionado)");
+
+                datos.setearParametro("@idUsuario", idUsuario);
+                datos.setearParametro("@idUsuarioRelacionado", idUsuarioRelacionado);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+        public void EliminarRelacion(int idUsuario, int idUsuarioRelacionado)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("DELETE FROM USUARIO_RELACION WHERE IdUsuario = @idUsuario AND IdUsuarioRelacionado = @idUsuarioRelacionado");
+                datos.setearParametro("@idUsuario", idUsuario);
+                datos.setearParametro("@idUsuarioRelacionado", idUsuarioRelacionado);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
+
 }

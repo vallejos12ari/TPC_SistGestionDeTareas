@@ -21,7 +21,7 @@
 <body>
     <main class="form-signin text-center">
         <form id="form1" runat="server" novalidate>
-            <!-- Necesario para que los validators funcionen en cliente -->
+           
             <asp:ScriptManager runat="server" />
 
             <h1 class="h3 mb-3 fw-normal">Iniciar Sesión</h1>

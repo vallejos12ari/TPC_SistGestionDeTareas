@@ -2,7 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container mt-4">
-        <h2>Gestión de Orden de Estados</h2>
+        <h2>Gestion de Orden de Estados</h2>
 
         <div class="row mb-3">
             <div class="col-md-12">
@@ -14,7 +14,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        Añadir Nueva Transición
+                        Agregar Nueva Transicion
                     </div>
                     <div class="card-body">
                         <asp:ValidationSummary ID="vsOrdenEstado" runat="server" CssClass="alert alert-danger" HeaderText="Por favor, corrige los siguientes errores:" />
@@ -30,7 +30,7 @@
                             <asp:RequiredFieldValidator ID="rfvEstadoDestino" runat="server" ControlToValidate="ddlEstadoDestino"
                                 ErrorMessage="Debe seleccionar un estado destino." InitialValue="0" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
                         </div>
-                        <asp:Button ID="btnAgregarTransicion" runat="server" Text="Agregar Transición" CssClass="btn btn-primary" OnClick="btnAgregarTransicion_Click" />
+                        <asp:Button ID="btnAgregarTransicion" runat="server" Text="Agregar Transicion" CssClass="btn btn-primary" OnClick="btnAgregarTransicion_Click" />
                     </div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                         <asp:BoundField DataField="EstadoDestino.NombreEstado" HeaderText="Estado Destino" SortExpression="EstadoDestino.NombreEstado" />
                         <asp:TemplateField HeaderText="Acciones">
                             <ItemTemplate>
-                                <asp:LinkButton ID="btnEliminar" runat="server" CommandName="Eliminar" CommandArgument='<%# Eval("IdOrden") %>' CssClass="btn btn-sm btn-danger" OnClientClick="return confirm('¿Estás seguro de que quieres eliminar esta transición?');">Eliminar</asp:LinkButton>
+                                <asp:LinkButton ID="btnEliminar" runat="server" CommandName="Eliminar" CommandArgument='<%# Eval("IdOrden") %>' CssClass="btn btn-sm btn-danger" OnClientClick="return confirm('¿Estas seguro de que quieres eliminar esta transicion?');">Eliminar</asp:LinkButton>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>

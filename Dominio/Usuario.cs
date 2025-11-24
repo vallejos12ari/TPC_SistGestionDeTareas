@@ -18,6 +18,8 @@ namespace Dominio
         public DateTime FechaCreacion { get; set; }
         public DateTime FechaActualizacion { get; set; }
 
+        public List<Usuario> UsuariosRelacionados { get; set; } = new List<Usuario>();
+
         //public Prioridades Prioridades { get; set; }
         //public Tarea Tarea { get; set; }
         //public Tags Tags { get; set; }

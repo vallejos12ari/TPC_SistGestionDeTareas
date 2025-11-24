@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -35,6 +35,10 @@ namespace SistemaDeGestionDeTareas
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                 "~/Scripts/modernizr-*"));
+
+            // Bundle for Bootstrap JavaScript
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                "~/Scripts/bootstrap.bundle.min.js"));
         }
 
         public static void RegisterJQueryScriptManager()
@@ -46,6 +50,16 @@ namespace SistemaDeGestionDeTareas
                     DebugPath = "~/scripts/jquery-3.7.0.js",
                     CdnPath = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.7.0.min.js",
                     CdnDebugPath = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.7.0.js"
+                });
+
+            // ScriptResourceMapping for Bootstrap
+            ScriptManager.ScriptResourceMapping.AddDefinition("bootstrap",
+                new ScriptResourceDefinition
+                {
+                    Path = "~/Scripts/bootstrap.bundle.min.js",
+                    DebugPath = "~/Scripts/bootstrap.bundle.js",
+                    CdnPath = "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js",
+                    CdnDebugPath = "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.js"
                 });
         }
     }
