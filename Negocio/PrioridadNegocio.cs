@@ -1,9 +1,8 @@
-﻿using Dominio;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using System.Data.SqlClient;
+using Dominio;
 
 namespace Negocio
 {
@@ -11,88 +10,97 @@ namespace Negocio
     {
         public List<Prioridad> Listar()
         {
-            List<Prioridad> lista = new List<Prioridad>();
-            AccesoDatos datos = new AccesoDatos();
+            var lista = new List<Prioridad>();
 
-            try
+            using (var datos = new AccesoDatos())
             {
-                datos.setearConsulta("SELECT IdPrioridad, NombrePrioridad, Nivel, Color FROM PRIORIDAD");
-                datos.ejecutarLectura();
+                datos.DefinirConsulta("SELECT * FROM prioridades WHERE eliminado = 0");
 
-                while (datos.Lector.Read())
+                using (var lector = datos.EjecutarLectura())
                 {
-                    Prioridad aux = new Prioridad();
-                    aux.IdPrioridad = (int)datos.Lector["IdPrioridad"];
-                    aux.NombrePrioridad = (string)datos.Lector["NombrePrioridad"];
-                    aux.Nivel = (int)datos.Lector["Nivel"];
-                    aux.Color = datos.Lector["Color"] != DBNull.Value ? (string)datos.Lector["Color"] : null;
+                    while (lector.Read())
+                    {
+                        var p = new Prioridad
+                        {
+                            Id = (int)lector["id"],
+                            Nombre = lector["nombre"].ToString(),
+                            Eliminado = (byte)lector["eliminado"],
+                            Color = lector["color"].ToString(),
+                            FechaCreacion = (DateTime)lector["fecha_creacion"]
+                        };
 
-                    lista.Add(aux);
+                        lista.Add(p);
+                    }
                 }
-
-                return lista;
             }
-            finally
+
+            return lista;
+        }
+
+        public void Agregar(Prioridad p)
+        {
+            using (var datos = new AccesoDatos())
             {
-                datos.cerrarConexion();
+                datos.DefinirConsulta(@"INSERT INTO prioridades (nombre, eliminado, color)
+                                           VALUES (@nombre, @eliminado, @color)");
+
+                datos.AgregarParametro("@nombre", p.Nombre, SqlDbType.VarChar);
+                datos.AgregarParametro("@eliminado", p.Eliminado, SqlDbType.TinyInt);
+                datos.AgregarParametro("@color", p.Color, SqlDbType.VarChar);
+
+                datos.EjecutarAccion();
             }
         }
 
-        public void Agregar(Prioridad prioridad)
+        public void Modificar(Prioridad p)
         {
-            AccesoDatos datos = new AccesoDatos();
-
-            try
+            using (var datos = new AccesoDatos())
             {
-                datos.setearConsulta("INSERT INTO PRIORIDAD (NombrePrioridad, Nivel, Color) VALUES (@nombre, @nivel, @color)");
-                datos.setearParametro("@nombre", prioridad.NombrePrioridad);
-                datos.setearParametro("@nivel", prioridad.Nivel);
-                datos.setearParametro("@color", prioridad.Color);
+                datos.DefinirConsulta(@"UPDATE prioridades SET 
+                                            nombre=@nombre, 
+                                            eliminado=@eliminado, 
+                                            color=@color 
+                                        WHERE id=@id");
 
-                datos.ejecutarAccion();
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
+                datos.AgregarParametro("@nombre", p.Nombre, SqlDbType.VarChar);
+                datos.AgregarParametro("@eliminado", p.Eliminado, SqlDbType.TinyInt);
+                datos.AgregarParametro("@color", p.Color, SqlDbType.VarChar);
+                datos.AgregarParametro("@id", p.Id, SqlDbType.Int);
 
-        public void Modificar(Prioridad prioridad)
-        {
-            AccesoDatos datos = new AccesoDatos();
-
-            try
-            {
-                datos.setearConsulta("UPDATE PRIORIDAD SET NombrePrioridad=@nombre, Nivel=@nivel, Color=@color WHERE IdPrioridad=@id");
-                datos.setearParametro("@nombre", prioridad.NombrePrioridad);
-                datos.setearParametro("@nivel", prioridad.Nivel);
-                datos.setearParametro("@color", prioridad.Color);
-                datos.setearParametro("@id", prioridad.IdPrioridad);
-                datos.ejecutarAccion();
-            }
-            finally
-            {
-                datos.cerrarConexion();
+                datos.EjecutarAccion();
             }
         }
 
         public void Eliminar(int id)
         {
-            AccesoDatos datos = new AccesoDatos();
+            using (var datos = new AccesoDatos())
+            {
+                datos.DefinirConsulta("UPDATE prioridades SET eliminado = 1 WHERE id=@id");
+                datos.AgregarParametro("@id", id, SqlDbType.Int);
 
-            try
-            {
-                datos.setearConsulta("DELETE FROM PRIORIDAD WHERE IdPrioridad=@id");
-                datos.setearParametro("@id", id);
-                datos.ejecutarAccion();
+                datos.EjecutarAccion();
             }
-            catch (Exception ex)
+        }
+        
+        public Prioridad BuscarPorId(int id)
+        {
+            using (AccesoDatos datos = new AccesoDatos())
             {
-                throw new Exception("Error al eliminar la prioridad", ex);
-            }
-            finally
-            {
-                datos.cerrarConexion();
+                datos.DefinirConsulta("SELECT id, nombre, color FROM prioridades WHERE id = @id");
+                datos.AgregarParametro("@id", id, SqlDbType.Int);
+
+                SqlDataReader lector = datos.EjecutarLectura();
+
+                if (lector.Read())
+                {
+                    Prioridad p = new Prioridad();
+                    p.Id = (int)lector["id"];
+                    p.Nombre = (string)lector["nombre"];
+                    p.Color = (string)lector["color"];
+                    return p;
+                }
+
+                return null;
             }
         }
     }

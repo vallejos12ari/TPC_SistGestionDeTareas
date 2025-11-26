@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dominio
 {
     public class Estado
     {
-        public int IdEstado { get; set; }
-        public string NombreEstado { get; set; }
-        public override string ToString() => NombreEstado;
-        public string Color { get; set; } 
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public byte Eliminado { get; set; }
+        public string Color { get; set; }
+        public DateTime FechaCreacion { get; set; }
     }
 }

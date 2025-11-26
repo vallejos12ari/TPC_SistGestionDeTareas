@@ -1,9 +1,8 @@
-﻿using Dominio;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
+using System.Data.SqlClient;
+using Dominio;
 
 namespace Negocio
 {
@@ -11,131 +10,125 @@ namespace Negocio
     {
         public List<Tag> Listar()
         {
-            List<Tag> lista = new List<Tag>();
-            AccesoDatos datos = new AccesoDatos();
+            var lista = new List<Tag>();
 
-            try
+            using (var datos = new AccesoDatos())
             {
-                datos.setearConsulta("SELECT IdTag, Nombre, Color  FROM TAG");
-                datos.ejecutarLectura();
+                datos.DefinirConsulta("SELECT * FROM tags WHERE eliminado = 0");
 
-                while (datos.Lector.Read())
+                using (var lector = datos.EjecutarLectura())
                 {
-                    Tag aux = new Tag();
-                    aux.IdTag = (int)datos.Lector["IdTag"];
-                    aux.Nombre = (string)datos.Lector["Nombre"];
-                    aux.Color = datos.Lector["Color"] == DBNull.Value ? null : (string)datos.Lector["Color"];
-                    lista.Add(aux);
-                }
-
-                return lista;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al listar Tags", ex);
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
-
-        // aca se busca tag por id
-        public Tag ObtenerPorId(int id)
-        {
-            AccesoDatos datos = new AccesoDatos();
-            Tag tag = null;
-
-            try
-            {
-                datos.setearConsulta("SELECT IdTag, Nombre, Color FROM TAG WHERE IdTag = @id");
-                datos.setearParametro("@id", id);
-                datos.ejecutarLectura();
-
-                if (datos.Lector.Read())
-                {
-                    tag = new Tag
+                    while (lector.Read())
                     {
-                        IdTag = (int)datos.Lector["IdTag"],
-                        Nombre = (string)datos.Lector["Nombre"],
-                        Color = datos.Lector["Color"] == DBNull.Value ? null : (string)datos.Lector["Color"]
-                    };
+                        var t = new Tag
+                        {
+                            Id = (int)lector["id"],
+                            Nombre = lector["nombre"].ToString(),
+                            Eliminado = (byte)lector["eliminado"],
+                            Color = lector["color"].ToString(),
+                            FechaCreacion = (DateTime)lector["fecha_creacion"]
+                        };
+
+                        lista.Add(t);
+                    }
                 }
+            }
 
-                return tag;
-            }
-            catch (Exception ex)
+            return lista;
+        }
+
+        public void Agregar(Tag t)
+        {
+            using (var datos = new AccesoDatos())
             {
-                throw new Exception("Error al obtener el Tag por ID", ex);
-            }
-            finally
-            {
-                datos.cerrarConexion();
+                datos.DefinirConsulta(@"INSERT INTO tags (nombre, eliminado, color)
+                                           VALUES (@nombre, @eliminado, @color)");
+
+                datos.AgregarParametro("@nombre", t.Nombre, SqlDbType.VarChar);
+                datos.AgregarParametro("@eliminado", t.Eliminado, SqlDbType.TinyInt);
+                datos.AgregarParametro("@color", t.Color, SqlDbType.VarChar);
+
+                datos.EjecutarAccion();
             }
         }
 
-        
-        public void Agregar(Tag tag)
+        public void Modificar(Tag t)
         {
-            AccesoDatos datos = new AccesoDatos();
+            using (var datos = new AccesoDatos())
+            {
+                datos.DefinirConsulta(@"UPDATE tags SET 
+                                            nombre=@nombre, 
+                                            eliminado=@eliminado, 
+                                            color=@color 
+                                        WHERE id=@id");
 
-            try
-            {
-                datos.setearConsulta("INSERT INTO TAG (Nombre, Color) VALUES (@nombre, @color)");
-                datos.setearParametro("@nombre", tag.Nombre);
-                datos.setearParametro("@color", tag.Color);
-                datos.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al agregar Tag", ex);
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
+                datos.AgregarParametro("@nombre", t.Nombre, SqlDbType.VarChar);
+                datos.AgregarParametro("@eliminado", t.Eliminado, SqlDbType.TinyInt);
+                datos.AgregarParametro("@color", t.Color, SqlDbType.VarChar);
+                datos.AgregarParametro("@id", t.Id, SqlDbType.Int);
 
-        public void Modificar(Tag tag)
-        {
-            AccesoDatos datos = new AccesoDatos();
-
-            try
-            {
-                datos.setearConsulta("UPDATE TAG SET Nombre = @nombre, Color = @color WHERE IdTag = @id");
-                datos.setearParametro("@nombre", tag.Nombre);
-                datos.setearParametro("@color", tag.Color);
-                datos.setearParametro("@id", tag.IdTag);
-                datos.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al modificar Tag", ex);
-            }
-            finally
-            {
-                datos.cerrarConexion();
+                datos.EjecutarAccion();
             }
         }
 
         public void Eliminar(int id)
         {
-            AccesoDatos datos = new AccesoDatos();
+            using (var datos = new AccesoDatos())
+            {
+                datos.DefinirConsulta("UPDATE tags SET eliminado = 1 WHERE id=@id");
+                datos.AgregarParametro("@id", id, SqlDbType.Int);
 
-            try
-            {
-                datos.setearConsulta("DELETE FROM TAG WHERE IdTag = @id");
-                datos.setearParametro("@id", id);
-                datos.ejecutarAccion();
+                datos.EjecutarAccion();
             }
-            catch (Exception ex)
+        }
+
+        public Tag BuscarPorId(int id)
+        {
+            Tag tag = null;
+
+            using (AccesoDatos datos = new AccesoDatos())
             {
-                throw new Exception("Error al eliminar Tag", ex);
+                datos.DefinirConsulta("SELECT id, nombre, color FROM tags WHERE id = @id");
+                datos.AgregarParametro("@id", id, SqlDbType.Int);
+
+                SqlDataReader lector = datos.EjecutarLectura();
+
+                if (lector.Read())
+                {
+                    tag = new Tag();
+                    tag.Id = (int)lector["id"];
+                    tag.Nombre = (string)lector["nombre"];
+                    tag.Color = (string)lector["color"];
+                }
             }
-            finally
+
+            return tag;
+        }
+
+        public List<Tag> BuscarPorTarea(int tareaId)
+        {
+            List<Tag> tags = new List<Tag>();
+            using (AccesoDatos datos = new AccesoDatos())
             {
-                datos.cerrarConexion();
+                datos.DefinirConsulta("SELECT id, nombre, color FROM tags WHERE eliminado = 0 AND id IN (SELECT tag_id FROM tareas_tags WHERE tarea_id = @id); ");
+                datos.AgregarParametro("@id", tareaId, SqlDbType.Int);
+                using (var lector = datos.EjecutarLectura())
+                {
+                    while (lector.Read())
+                    {
+                        Tag t = new Tag
+                        {
+                            Id = (int)lector["id"],
+                            Nombre = lector["nombre"].ToString(),
+                            Color = lector["color"].ToString(),
+                        };
+
+                        tags.Add(t);
+                    }
+                }
             }
+
+            return tags;
         }
     }
 }

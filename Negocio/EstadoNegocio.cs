@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using Dominio;
 
@@ -7,244 +8,183 @@ namespace Negocio
 {
     public class EstadoNegocio
     {
-        
         public List<Estado> Listar()
         {
-            List<Estado> lista = new List<Estado>();
-            AccesoDatos datos = new AccesoDatos();
-            try
+            var lista = new List<Estado>();
+
+            using (var datos = new AccesoDatos())
             {
-                datos.setearConsulta("SELECT IdEstado, NombreEstado, Color FROM ESTADO");
-                datos.ejecutarLectura();
-                while (datos.Lector.Read())
+                datos.DefinirConsulta("SELECT * FROM estados WHERE eliminado = 0");
+
+                using (var lector = datos.EjecutarLectura())
                 {
-                    Estado aux = new Estado();
-                    aux.IdEstado = (int)datos.Lector["IdEstado"];
-                    aux.NombreEstado = (string)datos.Lector["NombreEstado"];
-                    aux.Color = datos.Lector["Color"] is DBNull ? "#FFFFFF" : (string)datos.Lector["Color"];
-                    lista.Add(aux);
+                    while (lector.Read())
+                    {
+                        var e = new Estado
+                        {
+                            Id = (int)lector["id"],
+                            Nombre = lector["nombre"].ToString(),
+                            Eliminado = (byte)lector["eliminado"],
+                            Color = lector["color"].ToString(),
+                            FechaCreacion = (DateTime)lector["fecha_creacion"]
+                        };
+
+                        lista.Add(e);
+                    }
                 }
-                return lista;
             }
-            catch (Exception ex)
+
+            return lista;
+        }
+
+        public void Agregar(Estado e)
+        {
+            using (var datos = new AccesoDatos())
             {
-                throw new Exception("Error al listar estados", ex);
-            }
-            finally
-            {
-                datos.cerrarConexion();
+                datos.DefinirConsulta(@"INSERT INTO estados (nombre, eliminado, color)
+                                           VALUES (@nombre, @eliminado, @color)");
+
+                datos.AgregarParametro("@nombre", e.Nombre, SqlDbType.VarChar);
+                datos.AgregarParametro("@eliminado", e.Eliminado, SqlDbType.TinyInt);
+                datos.AgregarParametro("@color", e.Color, SqlDbType.VarChar);
+
+                datos.EjecutarAccion();
             }
         }
 
-        public void Agregar(Estado nuevoEstado)
+        public void Modificar(Estado e)
         {
-            AccesoDatos datos = new AccesoDatos();
-            try
+            using (var datos = new AccesoDatos())
             {
-                datos.setearConsulta("INSERT INTO ESTADO (NombreEstado, Color) VALUES (@NombreEstado, @Color)");
-                datos.setearParametro("@NombreEstado", nuevoEstado.NombreEstado);
-                datos.setearParametro("@Color", nuevoEstado.Color ?? "#FFFFFF"); 
-                datos.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al agregar estado", ex);
-            }
-            finally
-            {
-                datos.cerrarConexion();
+                datos.DefinirConsulta(@"UPDATE estados SET 
+                                            nombre=@nombre, 
+                                            eliminado=@eliminado,
+                                            color=@color
+                                        WHERE id=@id");
+
+                datos.AgregarParametro("@nombre", e.Nombre, SqlDbType.VarChar);
+                datos.AgregarParametro("@eliminado", e.Eliminado, SqlDbType.TinyInt);
+                datos.AgregarParametro("@color", e.Color, SqlDbType.VarChar);
+                datos.AgregarParametro("@id", e.Id, SqlDbType.Int);
+
+                datos.EjecutarAccion();
             }
         }
 
-        public void Modificar(Estado estado)
+        public void Eliminar(int id)
         {
-            AccesoDatos datos = new AccesoDatos();
-            try
+            using (var datos = new AccesoDatos())
             {
-                datos.setearConsulta("UPDATE ESTADO SET NombreEstado = @NombreEstado, Color = @Color WHERE IdEstado = @IdEstado");
-                datos.setearParametro("@NombreEstado", estado.NombreEstado);
-                datos.setearParametro("@Color", estado.Color ?? "#FFFFFF"); 
-                datos.setearParametro("@IdEstado", estado.IdEstado);
-                datos.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al modificar estado", ex);
-            }
-            finally
-            {
-                datos.cerrarConexion();
+                datos.DefinirConsulta("UPDATE estados SET eliminado = 1 WHERE id=@id");
+                datos.AgregarParametro("@id", id, SqlDbType.Int);
+
+                datos.EjecutarAccion();
             }
         }
 
-        public Estado ObtenerPorId(int idEstado)
+        public Estado BuscarPorId(int id)
         {
-            AccesoDatos datos = new AccesoDatos();
-            try
+            using (AccesoDatos datos = new AccesoDatos())
             {
-                datos.setearConsulta("SELECT IdEstado, NombreEstado, Color FROM ESTADO WHERE IdEstado = @IdEstado");
-                datos.setearParametro("@IdEstado", idEstado);
-                datos.ejecutarLectura();
-                if (datos.Lector.Read())
+                datos.DefinirConsulta("SELECT id, nombre, color FROM estados WHERE id = @id");
+                datos.AgregarParametro("@id", id, SqlDbType.Int);
+
+                SqlDataReader lector = datos.EjecutarLectura();
+
+                if (lector.Read())
                 {
-                    Estado aux = new Estado();
-                    aux.IdEstado = (int)datos.Lector["IdEstado"];
-                    aux.NombreEstado = (string)datos.Lector["NombreEstado"];
-                    aux.Color = datos.Lector["Color"] is DBNull ? "#FFFFFF" : (string)datos.Lector["Color"];
-                    return aux;
+                    Estado estado = new Estado();
+                    estado.Id = (int)lector["id"];
+                    estado.Nombre = (string)lector["nombre"];
+                    estado.Color = (string)lector["color"];
+
+                    return estado;
                 }
+
                 return null;
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al obtener estado por ID", ex);
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
         }
 
-        public void Eliminar(int idEstado)
+        public void AsignarInicial(int estadoId)
         {
-            AccesoDatos datos = new AccesoDatos();
-            try
+            using (AccesoDatos datos = new AccesoDatos())
             {
-                
-                datos.setearConsulta("DELETE FROM ORDEN_ESTADOS WHERE IdEstadoActual = @IdEstado OR IdEstadoDestino = @IdEstado");
-                datos.setearParametro("@IdEstado", idEstado);
-                datos.ejecutarAccion();
-                datos.cerrarConexion(); 
+                    datos.DefinirConsulta(@"
+                UPDATE estados 
+                SET es_inicial = 0 
+                WHERE es_inicial = 1;
 
-                datos = new AccesoDatos();
-                datos.setearConsulta("DELETE FROM ESTADO WHERE IdEstado = @IdEstado");
-                datos.setearParametro("@IdEstado", idEstado);
-                datos.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al eliminar estado. Asegúrese de que no haya tareas asociadas.", ex);
-            }
-            finally
-            {
-                datos.cerrarConexion();
+                UPDATE estados 
+                SET es_inicial = 1 
+                WHERE id = @id;
+            ");
+
+                datos.AgregarParametro("@id", estadoId, SqlDbType.Int);
+                datos.EjecutarAccion();
             }
         }
-
         
-        public List<OrdenEstado> ListarOrdenEstados()
+        public Estado BuscarInicial()
         {
-            List<OrdenEstado> lista = new List<OrdenEstado>();
-            AccesoDatos datos = new AccesoDatos();
-            try
+            using (var datos = new AccesoDatos())
             {
-                datos.setearConsulta(@"
-                    SELECT OE.IdOrden,
-                           EA.IdEstado AS IdEstadoActual, EA.NombreEstado AS NombreEstadoActual,
-                           ED.IdEstado AS IdEstadoDestino, ED.NombreEstado AS NombreEstadoDestino
-                    FROM ORDEN_ESTADOS OE
-                    INNER JOIN ESTADO EA ON OE.IdEstadoActual = EA.IdEstado
-                    INNER JOIN ESTADO ED ON OE.IdEstadoDestino = ED.IdEstado
-                ");
-                datos.ejecutarLectura();
-                while (datos.Lector.Read())
+                datos.DefinirConsulta("SELECT TOP 1 * FROM estados WHERE eliminado = 0 AND es_inicial = 1");
+
+                using (var lector = datos.EjecutarLectura())
                 {
-                    OrdenEstado aux = new OrdenEstado();
-                    aux.IdOrden = (int)datos.Lector["IdOrden"];
-                    aux.EstadoActual = new Estado
+                    if (lector.Read())
                     {
-                        IdEstado = (int)datos.Lector["IdEstadoActual"],
-                        NombreEstado = (string)datos.Lector["NombreEstadoActual"]
-                    };
-                    aux.EstadoDestino = new Estado
-                    {
-                        IdEstado = (int)datos.Lector["IdEstadoDestino"],
-                        NombreEstado = (string)datos.Lector["NombreEstadoDestino"]
-                    };
-                    lista.Add(aux);
+                        return new Estado
+                        {
+                            Id = (int)lector["id"],
+                            Nombre = lector["nombre"].ToString(),
+                            Eliminado = (byte)lector["eliminado"],
+                            Color = lector["color"]?.ToString(),
+                            FechaCreacion = (DateTime)lector["fecha_creacion"]
+                        };
+                    }
                 }
-                return lista;
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al listar órdenes de estado", ex);
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
 
-        public void AgregarOrdenEstado(OrdenEstado nuevaOrden)
-        {
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.setearConsulta("INSERT INTO ORDEN_ESTADOS (IdEstadoActual, IdEstadoDestino) VALUES (@IdEstadoActual, @IdEstadoDestino)");
-                datos.setearParametro("@IdEstadoActual", nuevaOrden.EstadoActual.IdEstado);
-                datos.setearParametro("@IdEstadoDestino", nuevaOrden.EstadoDestino.IdEstado);
-                datos.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al agregar orden de estado. Verifique que la transición no exista ya.", ex);
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
+            return null;
         }
-
-        public void EliminarOrdenEstado(int idOrden)
+        
+        public List<Estado> ObtenerSiguienteEstado(int estadoActualId)
         {
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.setearConsulta("DELETE FROM ORDEN_ESTADOS WHERE IdOrden = @IdOrden");
-                datos.setearParametro("@IdOrden", idOrden);
-                datos.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al eliminar orden de estado", ex);
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
+            var lista = new List<Estado>();
 
-        public List<Estado> ObtenerEstadosDestino(int idEstadoActual)
-        {
-            List<Estado> lista = new List<Estado>();
-            AccesoDatos datos = new AccesoDatos();
-            try
+            using (var datos = new AccesoDatos())
             {
-                datos.setearConsulta(@"
-                    SELECT ED.IdEstado, ED.NombreEstado
-                    FROM ORDEN_ESTADOS OE
-                    INNER JOIN ESTADO ED ON OE.IdEstadoDestino = ED.IdEstado
-                    WHERE OE.IdEstadoActual = @IdEstadoActual
-                ");
-                datos.setearParametro("@IdEstadoActual", idEstadoActual);
-                datos.ejecutarLectura();
-                while (datos.Lector.Read())
+                datos.DefinirConsulta(@"
+            SELECT e.*
+            FROM estados_flujo f
+            INNER JOIN estados e ON e.id = f.estado_destino_id
+            WHERE f.estado_origen_id = @origen
+              AND e.eliminado = 0
+        ");
+
+                datos.AgregarParametro("@origen", estadoActualId, SqlDbType.Int);
+
+                using (var lector = datos.EjecutarLectura())
                 {
-                    Estado aux = new Estado();
-                    aux.IdEstado = (int)datos.Lector["IdEstado"];
-                    aux.NombreEstado = (string)datos.Lector["NombreEstado"];
-                    lista.Add(aux);
+                    while (lector.Read())
+                    {
+                        var e = new Estado
+                        {
+                            Id = (int)lector["id"],
+                            Nombre = lector["nombre"].ToString(),
+                            Eliminado = (byte)lector["eliminado"],
+                            Color = lector["color"]?.ToString(),
+                            FechaCreacion = (DateTime)lector["fecha_creacion"]
+                        };
+
+                        lista.Add(e);
+                    }
                 }
-                return lista;
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al obtener estados destino", ex);
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
+
+            return lista;
         }
+
     }
 }

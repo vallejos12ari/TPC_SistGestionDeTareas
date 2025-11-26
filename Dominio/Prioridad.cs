@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dominio
 {
     public class Prioridad
     {
-        public int IdPrioridad { get; set; }
-        public string NombrePrioridad { get; set; }
-        public int Nivel { get; set; }
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public byte Eliminado { get; set; }
         public string Color { get; set; }
-        public override string ToString() => NombrePrioridad;
+        public DateTime FechaCreacion { get; set; }
     }
 }

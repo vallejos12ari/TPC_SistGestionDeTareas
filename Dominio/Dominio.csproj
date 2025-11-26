@@ -41,17 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutenticacionToken.cs" />
-    <Compile Include="Estado.cs" />
+    <Compile Include="Comentario.cs" />
+    <Compile Include="EstadoFlujo.cs" />
+    <Compile Include="FiltroTareaBusqueda.cs" />
+    <Compile Include="Historial.cs" />
+    <Compile Include="Hora.cs" />
     <Compile Include="Imagen.cs" />
-    <Compile Include="OrdenEstado.cs" />
-    <Compile Include="Prioridad.cs" />
-    <Compile Include="ReporteRendimiento.cs" />
-    <Compile Include="Tag.cs" />
     <Compile Include="Tarea.cs" />
-    <Compile Include="TareasTags.cs" />
-    <Compile Include="Usuario.cs" />
+    <Compile Include="Estado.cs" />
+    <Compile Include="Prioridad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tag.cs" />
+    <Compile Include="TareaListado.cs" />
+    <Compile Include="TareaTag.cs" />
+    <Compile Include="TipoRelacion.cs" />
+    <Compile Include="Usuario.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
