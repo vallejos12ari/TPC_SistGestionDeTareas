@@ -18,7 +18,7 @@ namespace Negocio
                     "d.id AS destinoId, d.nombre AS destinoNombre, d.color AS destinoColor " +
                     "FROM estados_flujo f " +
                     "INNER JOIN estados o ON o.id = f.estado_origen_id " +
-                    "INNER JOIN estados d ON d.id = f.estado_destino_id ");
+                    "INNER JOIN estados d ON d.id = f.estado_destino_id WHERE o.eliminado = 0 AND d.eliminado = 0");
 
                 SqlDataReader lector = datos.EjecutarLectura();
 

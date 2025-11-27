@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\create_db.sql" />
-    <Content Include="Scripts\seeder.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

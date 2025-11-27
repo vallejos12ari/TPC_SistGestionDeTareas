@@ -8,6 +8,8 @@ namespace Dominio
         public string Nombre { get; set; }
         public byte Eliminado { get; set; }
         public string Color { get; set; }
+        public byte EsFinal { get; set; }
+        public string EsInicial { get; set; }
         public DateTime FechaCreacion { get; set; }
     }
 }

@@ -7,14 +7,14 @@ namespace Negocio
 {
     public class HistorialNegocio
     {
-        public List<Historial> Listar()
+        public List<Historial> ListarPorTarea(int tareaId)
         {
             var lista = new List<Historial>();
 
             using (var datos = new AccesoDatos())
             {
-                datos.DefinirConsulta("SELECT * FROM historial");
-
+                datos.DefinirConsulta("SELECT * FROM historial WHERE tarea_id = @id");
+                datos.AgregarParametro("@id", tareaId, SqlDbType.Int);
                 using (var lector = datos.EjecutarLectura())
                 {
                     while (lector.Read())

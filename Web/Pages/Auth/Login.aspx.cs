@@ -10,7 +10,7 @@ namespace Web.Pages.Auth
         {
             if (Session["UsuarioActual"] != null)
             {
-                Response.Redirect("/Default.aspx");
+                Response.Redirect("../Default.aspx");
             }
         }
 
@@ -49,7 +49,13 @@ namespace Web.Pages.Auth
 
             Session["UsuarioActual"] = usuario;
 
-                Response.Redirect("../Tareas/Listar");
+            if (usuario.Rol == "ADMIN")
+            {
+                Response.Redirect("../Default.aspx");
+                return;
+            }
+
+            Response.Redirect("../Tareas/Listar");
             
         }
 

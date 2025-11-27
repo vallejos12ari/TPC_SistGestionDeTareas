@@ -68,6 +68,11 @@
                                 Text="Aplicar filtros"
                                 CssClass="btn btn-primary ms-3 mb-1"
                                 OnClick="ClickBotonFiltrar" />
+                    
+                    <asp:Button ID="BotonReniciarFiltro" runat="server"
+                                                    Text="Reiniciar"
+                                                    CssClass="btn btn-warning ms-3 mb-1"
+                                                    OnClick="ClickBotonReinicar" />
                 </div>
 
             </div>

@@ -180,45 +180,97 @@
     <input type="hidden" id="HiddenComentarioId" runat="server" />
 
     
-    <hr class="my-4" />
-    
-    <h5 class="fw-bold mb-3">Comentarios</h5>
-    
-    <asp:Label ID="ErrorComentarios" runat="server"
-               CssClass="text-danger fw-bold d-block mb-2"></asp:Label>
-    
-    <asp:Repeater ID="RepeaterComentarios" runat="server">
-        <ItemTemplate>
-            <div class="border rounded p-3 mb-2 bg-light d-flex justify-content-between align-items-start">
-    
-                <div>
-                    <div class="fw-bold"><%# Eval("UsuarioNombre") %></div>
-                    <div><%# Eval("Texto") %></div>
-                    <div class="text-muted small"><%# Eval("FechaCreacion", "{0:dd/MM/yyyy HH:mm}") %></div>
-                </div>
-    
-         <asp:LinkButton ID="BotonEliminarComentario"
-                         runat="server"
-                         CssClass="btn btn-sm btn-outline-danger"
-                         Text="Eliminar"
-                         CommandName="EliminarComentario"
-                         CommandArgument='<%# Eval("Id") %>' />
-
-            </div>
-        </ItemTemplate>
-    </asp:Repeater>
-    
-    <div class="mt-4">
-        <asp:TextBox ID="TextoComentario" runat="server"
-                     CssClass="form-control mb-2"
-                     TextMode="MultiLine" Rows="3"></asp:TextBox>
-    
-        <asp:Button ID="BotonAgregarComentario"
-                    runat="server"
-                    CssClass="btn btn-primary btn-sm"
-                    Text="Agregar comentario"
-                    OnClick="ClickAgregarComentario" />
-    </div>
+   <hr class="my-4" />
+   
+   <h5 class="fw-bold mb-3">Actividad</h5>
+   
+   <ul class="nav nav-tabs mb-3" id="TabsComentariosHistorial" role="tablist">
+       <li class="nav-item" role="presentation">
+           <button class="nav-link active" id="tab-comentarios"
+                   data-bs-toggle="tab"
+                   data-bs-target="#panel-comentarios"
+                   type="button" role="tab">
+               Comentarios
+           </button>
+       </li>
+   
+       <li class="nav-item" role="presentation">
+           <button class="nav-link" id="tab-historial"
+                   data-bs-toggle="tab"
+                   data-bs-target="#panel-historial"
+                   type="button" role="tab">
+               Historial
+           </button>
+       </li>
+   </ul>
+   
+   <div class="tab-content">
+   
+       <div class="tab-pane fade show active" id="panel-comentarios" role="tabpanel">
+   
+           <asp:Label ID="ErrorComentarios" runat="server"
+                      CssClass="text-danger fw-bold d-block mb-2"></asp:Label>
+   
+           <asp:Repeater ID="RepeaterComentarios" runat="server">
+               <ItemTemplate>
+                   <div class="border rounded p-3 mb-2 bg-light d-flex justify-content-between align-items-start">
+   
+                       <div>
+                           <div class="fw-bold"><%# Eval("UsuarioNombre") %></div>
+                           <div><%# Eval("Texto") %></div>
+                           <div class="text-muted small">
+                               <%# Eval("FechaCreacion", "{0:dd/MM/yyyy HH:mm}") %>
+                           </div>
+                       </div>
+   
+                       <asp:LinkButton ID="BotonEliminarComentario"
+                                       runat="server"
+                                       CssClass="btn btn-sm btn-outline-danger"
+                                       Text="Eliminar"
+                                       CommandName="EliminarComentario"
+                                       CommandArgument='<%# Eval("Id") %>' />
+                   </div>
+               </ItemTemplate>
+           </asp:Repeater>
+   
+           <div class="mt-4">
+               <asp:TextBox ID="TextoComentario" runat="server"
+                            CssClass="form-control mb-2"
+                            TextMode="MultiLine" Rows="3"></asp:TextBox>
+   
+               <asp:Button ID="BotonAgregarComentario"
+                           runat="server"
+                           CssClass="btn btn-primary btn-sm"
+                           Text="Agregar comentario"
+                           OnClick="ClickAgregarComentario" />
+           </div>
+   
+       </div>
+   
+       <!-- PANEL: HISTORIAL -->
+       <div class="tab-pane fade" id="panel-historial" role="tabpanel">
+   
+           <asp:Repeater ID="RepeaterHistorial" runat="server">
+               <ItemTemplate>
+                   <div class="border rounded p-3 mb-2 bg-white">
+                       <div class="fw-bold"><%# Eval("UsuarioNombre") %></div>
+   
+                       <div class="d-flex justify-content-between align-items-center">
+                            <div class="small mt-1">
+                                <%# Eval("ValorAnterior") %> -> <%# Eval("ValorNuevo") %>
+                            </div>
+        
+                            <div class="text-muted small mt-1">
+                                <%# Eval("Fecha", "{0:dd/MM/yyyy HH:mm}") %>
+                            </div>
+                        </div>
+                   </div>
+               </ItemTemplate>
+           </asp:Repeater>
+   
+       </div>
+   
+   </div>
     
     <div class="modal fade" id="ModalHoras" tabindex="-1">
         <div class="modal-dialog">

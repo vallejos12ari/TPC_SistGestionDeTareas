@@ -26,7 +26,8 @@ namespace Negocio
                             Nombre = lector["nombre"].ToString(),
                             Eliminado = (byte)lector["eliminado"],
                             Color = lector["color"].ToString(),
-                            FechaCreacion = (DateTime)lector["fecha_creacion"]
+                            FechaCreacion = (DateTime)lector["fecha_creacion"],
+                            EsFinal = (byte)lector["es_final"],
                         };
 
                         lista.Add(e);
@@ -41,12 +42,13 @@ namespace Negocio
         {
             using (var datos = new AccesoDatos())
             {
-                datos.DefinirConsulta(@"INSERT INTO estados (nombre, eliminado, color)
-                                           VALUES (@nombre, @eliminado, @color)");
+                datos.DefinirConsulta(@"INSERT INTO estados (nombre, eliminado, color, es_final)
+                                           VALUES (@nombre, @eliminado, @color, @esFinal)");
 
                 datos.AgregarParametro("@nombre", e.Nombre, SqlDbType.VarChar);
                 datos.AgregarParametro("@eliminado", e.Eliminado, SqlDbType.TinyInt);
                 datos.AgregarParametro("@color", e.Color, SqlDbType.VarChar);
+                datos.AgregarParametro("@esFinal", e.EsFinal, SqlDbType.TinyInt);
 
                 datos.EjecutarAccion();
             }
@@ -59,13 +61,15 @@ namespace Negocio
                 datos.DefinirConsulta(@"UPDATE estados SET 
                                             nombre=@nombre, 
                                             eliminado=@eliminado,
-                                            color=@color
+                                            color=@color,
+                                            es_final=@esFinal
                                         WHERE id=@id");
 
                 datos.AgregarParametro("@nombre", e.Nombre, SqlDbType.VarChar);
                 datos.AgregarParametro("@eliminado", e.Eliminado, SqlDbType.TinyInt);
                 datos.AgregarParametro("@color", e.Color, SqlDbType.VarChar);
                 datos.AgregarParametro("@id", e.Id, SqlDbType.Int);
+                datos.AgregarParametro("@esFinal", e.EsFinal, SqlDbType.TinyInt);
 
                 datos.EjecutarAccion();
             }
@@ -86,7 +90,7 @@ namespace Negocio
         {
             using (AccesoDatos datos = new AccesoDatos())
             {
-                datos.DefinirConsulta("SELECT id, nombre, color FROM estados WHERE id = @id");
+                datos.DefinirConsulta("SELECT id, nombre, color, es_final FROM estados WHERE id = @id");
                 datos.AgregarParametro("@id", id, SqlDbType.Int);
 
                 SqlDataReader lector = datos.EjecutarLectura();
@@ -97,6 +101,7 @@ namespace Negocio
                     estado.Id = (int)lector["id"];
                     estado.Nombre = (string)lector["nombre"];
                     estado.Color = (string)lector["color"];
+                    estado.EsFinal = (byte)lector["es_final"];
 
                     return estado;
                 }

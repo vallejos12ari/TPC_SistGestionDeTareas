@@ -23,8 +23,16 @@ namespace Web.Pages.Estados
 
                 Estado estado = estadoNegocio.BuscarPorId(id);
 
+                if (estado == null)
+                {
+                    ErrorEditar.Text = "El estado que intenta editar no existe.";
+                    return;
+                }
+
                 TextoNombre.Text = estado.Nombre;
                 TextoColor.Text = estado.Color;
+
+                CheckEsFinal.Checked = estado.EsFinal == 1;
 
                 string script = "document.getElementById('SelectColor').value = '" + estado.Color + "';";
                 ClientScript.RegisterStartupScript(GetType(), "SetColorEditar", script, true);
@@ -52,6 +60,8 @@ namespace Web.Pages.Estados
             estado.Id = int.Parse(IdEstadoHidden.Value);
             estado.Nombre = nombre;
             estado.Color = color;
+
+            estado.EsFinal = CheckEsFinal.Checked ? (byte)1 : (byte)0;
 
             estadoNegocio.Modificar(estado);
 

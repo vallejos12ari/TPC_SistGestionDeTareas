@@ -169,5 +169,26 @@ namespace Negocio
 
             return null;
         }
+        
+        public bool EmailExiste(string email)
+        {
+            bool existe = false;
+
+            using (AccesoDatos datos = new AccesoDatos())
+            {
+                datos.DefinirConsulta("SELECT TOP 1 id FROM usuarios WHERE email = @email AND eliminado = 0");
+                datos.AgregarParametro("@email", email, SqlDbType.VarChar);
+
+                using (SqlDataReader lector = datos.EjecutarLectura())
+                {
+                    if (lector.Read())
+                    {
+                        existe = true;
+                    }
+                }
+            }
+
+            return existe;
+        }
     }
 }

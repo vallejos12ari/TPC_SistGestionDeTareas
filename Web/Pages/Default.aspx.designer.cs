@@ -7,56 +7,79 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SistemaDeGestionDeTareas
+namespace Web
 {
 
 
-    public partial class TestEmail
+    public partial class Default
     {
 
         /// <summary>
-        /// txtDestino control.
+        /// TextoDesde control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDestino;
+        protected global::System.Web.UI.WebControls.TextBox TextoDesde;
 
         /// <summary>
-        /// txtTitulo control.
+        /// TextoHasta control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTitulo;
+        protected global::System.Web.UI.WebControls.TextBox TextoHasta;
 
         /// <summary>
-        /// txtAsignador control.
+        /// BotonFiltrar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAsignador;
+        protected global::System.Web.UI.WebControls.Button BotonFiltrar;
 
         /// <summary>
-        /// btnProbar control.
+        /// TablaTareasPorEstado control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnProbar;
+        protected global::System.Web.UI.WebControls.GridView TablaTareasPorEstado;
 
         /// <summary>
-        /// lblResultado control.
+        /// TablaVencidas control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblResultado;
+        protected global::System.Web.UI.WebControls.GridView TablaVencidas;
+
+        /// <summary>
+        /// TablaHorasPorUsuario control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView TablaHorasPorUsuario;
+
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new Web.MasterPages.Site Master
+        {
+            get
+            {
+                return ((Web.MasterPages.Site)(base.Master));
+            }
+        }
     }
 }

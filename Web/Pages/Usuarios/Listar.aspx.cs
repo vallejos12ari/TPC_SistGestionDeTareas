@@ -26,6 +26,11 @@ namespace Web.Pages.Usuarios
         protected void ClickBotonConfirmarEliminar(object sender, EventArgs e)
         {
             int id = int.Parse(IdUsuarioAEliminar.Value);
+            if (id == ((Usuario)Session["UsuarioActual"]).Id)
+            {
+                Error.Text = "No se puede eliminar el usuario logueado.";
+                return;
+            }
             UsuarioNegocio negocio = new UsuarioNegocio();
             negocio.Eliminar(id);
             CargarUsuarios();

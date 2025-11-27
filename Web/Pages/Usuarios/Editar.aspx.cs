@@ -2,6 +2,7 @@
 using Negocio;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
 
 namespace Web.Pages.Usuarios
@@ -47,16 +48,86 @@ namespace Web.Pages.Usuarios
             SelectRol.SelectedValue = usuario.Rol;
         }
 
+        private bool MostrarError(string msg)
+        {
+            ErrorEditar.Text = msg;
+            return false;
+        }
+
+        private bool ValidarCampos()
+        {
+            string nombre = TextoNombre.Text.Trim();
+            string email = TextoEmail.Text.Trim();
+            string rol = SelectRol.SelectedValue.Trim();
+
+            if (nombre.Length < 3)
+            {
+                return MostrarError("El nombre debe tener al menos 3 caracteres.");
+            }
+
+            if (nombre.Length > 50)
+            {
+                return MostrarError("El nombre no puede superar los 50 caracteres.");
+            }
+
+            if (nombre.Contains("<") || nombre.Contains(">"))
+            {
+                return MostrarError("El nombre contiene caracteres inválidos.");
+            }
+
+            if (string.IsNullOrEmpty(email))
+            {
+                return MostrarError("El email no puede estar vacío.");
+            }
+
+            if (email.Length > 100)
+            {
+                return MostrarError("El email no puede superar los 100 caracteres.");
+            }
+
+            if (!Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                return MostrarError("El email no tiene un formato válido.");
+            }
+
+            string emailUsuario = usuarioNegocio.BuscarPorId(IdUsuario).Email;
+
+            if (emailUsuario != email)
+            {
+                bool existente = usuarioNegocio.EmailExiste(email);
+                if (existente)
+                {
+                    return MostrarError("Ya existe un usuario registrado con ese email.");
+                }
+            }
+
+            if (rol != "ADMIN" && rol != "SUPERVISOR" && rol != "USER")
+            {
+                return MostrarError("Debe seleccionar un rol válido.");
+            }
+
+            return true;
+        }
+
         protected void ClickBotonGuardar(object sender, EventArgs e)
         {
+            if (!ValidarCampos())
+            {
+                return;
+            }
+
             Usuario usuario = usuarioNegocio.BuscarPorId(IdUsuario);
 
-            usuario.Nombre = TextoNombre.Text;
-            usuario.Email = TextoEmail.Text;
+            usuario.Nombre = TextoNombre.Text.Trim();
+            usuario.Email = TextoEmail.Text.Trim();
             usuario.Rol = SelectRol.SelectedValue;
 
-            usuarioNegocio.Modificar(usuario);
+            if (usuario.Rol == "USER")
+            {
+                relacionesNegocio.BorrarAsignados(IdUsuario);
+            }
 
+            usuarioNegocio.Modificar(usuario);
             Response.Redirect("Listar.aspx");
         }
 
@@ -65,19 +136,19 @@ namespace Web.Pages.Usuarios
             int id = int.Parse(IdUsuarioHidden.Value);
             Usuario usuario = usuarioNegocio.BuscarPorId(id);
 
-            usuario.Password = "gestiondeturnos";
+            usuario.Password = "gestiondetareas";
 
             usuarioNegocio.Modificar(usuario);
 
             Response.Redirect("Listar.aspx");
         }
-        
+
         private string RolUsuario()
         {
             Usuario usuario = (Usuario)Session["UsuarioActual"];
             return usuario?.Rol ?? "";
         }
-        
+
         private int IdUsuarioActual()
         {
             Usuario usuario = (Usuario)Session["UsuarioActual"];
@@ -86,15 +157,16 @@ namespace Web.Pages.Usuarios
 
         private void MostrarPanelAsignados()
         {
-            if (RolUsuario() != "ADMIN") {
+            if (RolUsuario() != "ADMIN")
+            {
                 PanelAsignados.Visible = false;
                 return;
             }
 
             PanelAsignados.Visible = true;
 
-            CargarUsuariosParaAsignar(IdUsuarioActual());
-            List<Usuario> usuariosAsignados = relacionesNegocio.ListarAsignados(IdUsuarioActual());
+            CargarUsuariosParaAsignar(IdUsuario);
+            List<Usuario> usuariosAsignados = relacionesNegocio.ListarAsignados(IdUsuario);
             CargarUsuariosAsignados(usuariosAsignados);
         }
 
@@ -160,7 +232,6 @@ namespace Web.Pages.Usuarios
             CargarUsuariosAsignados(usuarios);
             CargarUsuariosParaAsignar(idSupervisor);
         }
-
 
         protected void ClickBotonDesasignar(object sender, EventArgs e)
         {

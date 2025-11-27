@@ -19,7 +19,7 @@ namespace Web.MasterPages
             }
             else
             {
-                    Response.Redirect("../Auth/Login");
+                    Response.Redirect("../Auth/Login.aspx");
             }
         }
 
@@ -27,7 +27,7 @@ namespace Web.MasterPages
         {
             Session.Clear();
             Session.Abandon();
-            Response.Redirect("/Pages/Auth/Login");
+            Response.Redirect("/Pages/Auth/Login.aspx");
         }
     }
 }

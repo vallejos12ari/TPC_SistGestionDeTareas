@@ -11,21 +11,16 @@ namespace Web.Pages
 {
 
 
-    public partial class Default
+    public partial class Error
     {
 
         /// <summary>
-        /// Master property.
+        /// HtmlForm control.
         /// </summary>
         /// <remarks>
-        /// Auto-generated property.
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        public new Web.MasterPages.Site Master
-        {
-            get
-            {
-                return ((Web.MasterPages.Site)(base.Master));
-            }
-        }
+        protected global::System.Web.UI.HtmlControls.HtmlForm HtmlForm;
     }
 }

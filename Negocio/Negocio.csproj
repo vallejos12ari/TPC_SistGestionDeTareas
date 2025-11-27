@@ -51,6 +51,7 @@
     <Compile Include="ImagenNegocio.cs" />
     <Compile Include="PrioridadNegocio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReporteNegocio.cs" />
     <Compile Include="TagNegocio.cs" />
     <Compile Include="TareaNegocio.cs" />
     <Compile Include="TareaTagNegocio.cs" />

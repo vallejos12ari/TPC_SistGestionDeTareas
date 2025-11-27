@@ -17,7 +17,7 @@
             <asp:TextBox ID="TextoNombre" runat="server" CssClass="form-control" />
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
             <label class="form-label">Color</label>
 
             <select id="SelectColor" class="form-select"
@@ -38,6 +38,15 @@
             </select>
 
             <asp:TextBox ID="TextoColor" runat="server" CssClass="d-none" />
+        </div>
+        
+        <div class="col-md-2">
+            <div class="form-check mt-4">
+                <asp:CheckBox ID="CheckEsFinal" runat="server" CssClass="form-check-input" />
+                <label class="form-check-label" for="<%= CheckEsFinal.ClientID %>">
+                    Es estado final
+                </label>
+            </div>
         </div>
 
         <div class="mt-4 d-flex gap-3">

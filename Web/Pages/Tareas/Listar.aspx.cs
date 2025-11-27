@@ -88,7 +88,7 @@ namespace Web.Pages.Tareas
             if (rol == "ADMIN" || rol == "SUPERVISOR")
             {
                 if (string.IsNullOrEmpty(FiltroUsuarioAsignado.SelectedValue))
-                    idAsignado = idUsuario;
+                    idAsignado = null;
                 else
                     idAsignado = int.Parse(FiltroUsuarioAsignado.SelectedValue);
             }
@@ -121,7 +121,7 @@ namespace Web.Pages.Tareas
 
             MostrarMensajeSiNoHayTareas(lista);
 
-            bool mostrarColumnaAsignado = rol == "USER";
+            bool mostrarColumnaAsignado = rol != "USER";
             TablaTareas.Columns[3].Visible = mostrarColumnaAsignado;
 
             string rolAct = RolUsuario();
@@ -153,6 +153,15 @@ namespace Web.Pages.Tareas
 
         protected void ClickBotonFiltrar(object sender, EventArgs e)
         {
+            CargarTareas();
+        }
+
+        protected void ClickBotonReinicar(object sender, EventArgs e)
+        {
+            FiltroDesde.Text = null;
+            FiltroHasta.Text = null;
+            FiltroTexto.Text = null;
+            CargarFiltros();
             CargarTareas();
         }
 

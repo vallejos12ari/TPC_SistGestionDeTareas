@@ -24,7 +24,6 @@
             <asp:DropDownList ID="SelectUsuarioAsignado" runat="server" CssClass="form-select"></asp:DropDownList>
         </div>
 
-        <!-- DESCRIPCIÓN -->
         <div class="col-md-6">
             <label class="form-label">
                 Descripción <span class="text-danger">*</span>
@@ -35,7 +34,7 @@
         
          <div class="col-md-6">
                     <label class="form-label">
-                        Tags <span class="text-danger">*</span>
+                        Tags
                     </label>
                     <asp:ListBox ID="SelectTags" runat="server"
                                  CssClass="form-select"
@@ -44,15 +43,12 @@
                     </asp:ListBox>
                 </div>
 
-
         <div class="col-md-6">
             <label class="form-label">
                 Prioridad <span class="text-danger">*</span>
             </label>
             <asp:DropDownList ID="SelectPrioridad" runat="server" CssClass="form-select"></asp:DropDownList>
         </div>
-
-        <!-- TAGS + VENCIMIENTO + HORAS ESTIMADAS -->
 
         <div class="col-md-6">
             <label class="form-label">
@@ -80,9 +76,9 @@
                <label class="form-label">
                    Horas estimadas
                </label>
-               <asp:TextBox ID="TextoHorasEstimadas" runat="server"
-                            CssClass="form-control"
-                            TextMode="Number" />
+                <asp:TextBox ID="TextoHorasEstimadas" runat="server"
+                       CssClass="form-control"
+                       placeholder="Ej: 1.5" />
                </div>
 
         <div class="col-md-6">
@@ -103,7 +99,6 @@
             </div>
         </div>
 
-        <!-- BOTONES -->
         <div class="mt-4 d-flex gap-3">
             <asp:Button ID="BotonCrear" runat="server"
                         Text="Crear"

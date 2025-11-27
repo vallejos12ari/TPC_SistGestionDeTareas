@@ -47,6 +47,7 @@
     <Compile Include="Historial.cs" />
     <Compile Include="Hora.cs" />
     <Compile Include="Imagen.cs" />
+    <Compile Include="Reportes.cs" />
     <Compile Include="Tarea.cs" />
     <Compile Include="Estado.cs" />
     <Compile Include="Prioridad.cs" />

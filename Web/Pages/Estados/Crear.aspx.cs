@@ -11,7 +11,11 @@ namespace Web.Pages.Estados
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
+            {
                 TextoColor.Text = "#FFE066";
+                string script = "document.getElementById('SelectColor').value = '#FFE066';";
+                ClientScript.RegisterStartupScript(GetType(), "SetColorCrear", script, true);
+            }
         }
 
         protected void ClickBotonCrear(object sender, EventArgs e)
@@ -34,6 +38,7 @@ namespace Web.Pages.Estados
             Estado estado = new Estado();
             estado.Nombre = nombre;
             estado.Color = color;
+            estado.EsFinal = CheckEsFinal.Checked ? (byte)1 : (byte)0;
 
             estadoNegocio.Agregar(estado);
 

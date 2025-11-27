@@ -19,10 +19,10 @@ namespace Web
         {
             // Session["UsuarioActual"] = new Usuario
             // {
-            //     Id = 2,
-            //     Nombre = "Dev",
+            //     Id = 0,
+            //     Nombre = "Admin",
             //     Email = "dev@local",
-            //     Rol = "SUPERVISOR"
+            //     Rol = "ADMIN"
             // };
         }
     }

@@ -5,7 +5,9 @@
 <asp:Content ID="ContenidoUsuario" ContentPlaceHolderID="MainContent" runat="server">
 
     <h3 class="fw-bold mb-4">Editar usuario</h3>
-
+    
+    <asp:Label ID="ErrorEditar" runat="server"
+           CssClass="text-danger fw-bold d-block mb-3"></asp:Label>
     <asp:HiddenField ID="IdUsuarioHidden" runat="server" />
 
     <div class="row g-3">
@@ -102,7 +104,7 @@
                 </div>
 
                 <div class="modal-body">
-                    A este usuario se le reiniciará la contraseña a <strong>gestiondeturnos</strong>.
+                    A este usuario se le reiniciará la contraseña a <strong>gestiondetareas</strong>.
                     La próxima vez que ingrese, se le pedirá cambiarla. ¿Está seguro?
                 </div>
 
@@ -124,6 +126,23 @@
             let modal = new bootstrap.Modal(document.getElementById('ModalReiniciar'))
             modal.show()
         }
+    </script>
+    
+    <script>
+        const ddlRol = document.getElementById("<%= SelectRol.ClientID %>");
+        const panelAsignados = document.getElementById("<%= PanelAsignados.ClientID %>");
+    
+        function ActualizarPanelAsignados() {
+            if (ddlRol.value === "USER") {
+                panelAsignados.style.display = "none";
+            } else {
+                panelAsignados.style.display = "block";
+            }
+        }
+    
+        ddlRol.addEventListener("change", ActualizarPanelAsignados);
+    
+        ActualizarPanelAsignados();
     </script>
 
 </asp:Content>

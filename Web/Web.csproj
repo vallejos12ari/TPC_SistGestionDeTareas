@@ -116,11 +116,12 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="MasterPages\Site.Master" />
     <Content Include="Pages\Auth\Login.aspx" />
+    <Content Include="Pages\Default.aspx" />
+    <Content Include="Pages\Error.aspx" />
     <Content Include="Pages\Estados\Crear.aspx" />
     <Content Include="Pages\Estados\Editar.aspx" />
     <Content Include="Pages\Estados\Flujo.aspx" />
@@ -201,13 +202,6 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Default.aspx.cs">
-      <SubType>ASPXCodeBehind</SubType>
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs" />
     <Compile Include="MasterPages\Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -223,55 +217,55 @@
     <Compile Include="Pages\Auth\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Default.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Error.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Estados\Crear.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>Crear.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Estados\Crear.aspx.designer.cs">
-      <DependentUpon>Crear.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="Pages\Estados\Crear.aspx.designer.cs" />
     <Compile Include="Pages\Estados\Editar.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>Editar.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Estados\Editar.aspx.designer.cs">
-      <DependentUpon>Editar.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="Pages\Estados\Editar.aspx.designer.cs" />
     <Compile Include="Pages\Estados\Flujo.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>Flujo.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Estados\Flujo.aspx.designer.cs">
-      <DependentUpon>Flujo.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="Pages\Estados\Flujo.aspx.designer.cs" />
     <Compile Include="Pages\Estados\Listar.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>Listar.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Estados\Listar.aspx.designer.cs">
-      <DependentUpon>Listar.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="Pages\Estados\Listar.aspx.designer.cs" />
     <Compile Include="Pages\Prioridades\Crear.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>Crear.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Prioridades\Crear.aspx.designer.cs">
-      <DependentUpon>Crear.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="Pages\Prioridades\Crear.aspx.designer.cs" />
     <Compile Include="Pages\Prioridades\Editar.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>Editar.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Prioridades\Editar.aspx.designer.cs">
-      <DependentUpon>Editar.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="Pages\Prioridades\Editar.aspx.designer.cs" />
     <Compile Include="Pages\Prioridades\Listar.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>Listar.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Prioridades\Listar.aspx.designer.cs">
-      <DependentUpon>Listar.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="Pages\Prioridades\Listar.aspx.designer.cs" />
     <Compile Include="Pages\Relaciones\Crear.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>Crear.aspx</DependentUpon>
@@ -297,23 +291,17 @@
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>Crear.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Tags\Crear.aspx.designer.cs">
-      <DependentUpon>Crear.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="Pages\Tags\Crear.aspx.designer.cs" />
     <Compile Include="Pages\Tags\Editar.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>Editar.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Tags\Editar.aspx.designer.cs">
-      <DependentUpon>Editar.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="Pages\Tags\Editar.aspx.designer.cs" />
     <Compile Include="Pages\Tags\Listar.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>Listar.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Tags\Listar.aspx.designer.cs">
-      <DependentUpon>Listar.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="Pages\Tags\Listar.aspx.designer.cs" />
     <Compile Include="Pages\Tareas\Crear.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>Crear.aspx</DependentUpon>

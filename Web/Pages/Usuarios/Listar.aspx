@@ -9,6 +9,9 @@
         <p class="fw-bold fs-3">Usuarios</p>
         <a href="Crear.aspx" class="btn btn-primary mb-3">Crear</a>
     </div>
+    
+        <asp:Label ID="Error" runat="server"
+               CssClass="text-danger fw-bold d-block mb-3"></asp:Label>
 
     <asp:HiddenField ID="IdUsuarioAEliminar" runat="server" />
 

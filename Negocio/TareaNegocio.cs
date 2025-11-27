@@ -45,6 +45,42 @@ namespace Negocio
 
             return lista;
         }
+        
+        public List<Tarea> ListarAsignables()
+        {
+            var lista = new List<Tarea>();
+
+            using (var datos = new AccesoDatos())
+            {
+                datos.DefinirConsulta("SELECT * FROM tareas t JOIN estados e ON e.id = t.estado_id AND e.es_final = 0 WHERE t.eliminado = 0");
+
+                using (var lector = datos.EjecutarLectura())
+                {
+                    while (lector.Read())
+                    {
+                        var aux = new Tarea
+                        {
+                            Id = (int)lector["id"],
+                            Titulo = lector["titulo"].ToString(),
+                            Descripcion = lector["descripcion"] != DBNull.Value ? lector["descripcion"].ToString() : null,
+                            UsuarioId = (int)lector["usuario_id"],
+                            CreadoPor = (int)lector["creado_por"],
+                            HsEstimadas = (decimal)lector["hs_estimadas"],
+                            EstadoId = (int)lector["estado_id"],
+                            PrioridadId = (int)lector["prioridad_id"],
+                            TipoRelacionId = lector["tipo_relacion_id"] != DBNull.Value ? (int?)lector["tipo_relacion_id"] : null,
+                            RelacionadoId = lector["relacionado_id"] != DBNull.Value ? (int?)lector["relacionado_id"] : null,
+                            FechaVencimiento = (DateTime)lector["fecha_vencimiento"],
+                            FechaCreacion = (DateTime)lector["fecha_creacion"]
+                        };
+
+                        lista.Add(aux);
+                    }
+                }
+            }
+
+            return lista;
+        }
 
         public List<TareaListado> ListarFiltrado(FiltroTareaBusqueda f)
         {
@@ -261,6 +297,9 @@ namespace Negocio
                 var file = imagenes[i];
 
                 string extension = Path.GetExtension(file.FileName);
+
+                if (extension == "application/octet-stream" || extension == "") continue;
+
                 string nombre = Guid.NewGuid().ToString("N") + extension;
 
                 string rutaFisica = Path.Combine(carpeta, nombre);

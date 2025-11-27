@@ -38,7 +38,7 @@ namespace Negocio
                 datos.DefinirConsulta(
                     "SELECT u.id, u.nombre, u.email, u.rol, u.verificado " +
                     "FROM usuarios_relacionados r " +
-                    "INNER JOIN usuarios u ON u.id = r.id_usuario " +
+                    "INNER JOIN usuarios u ON u.id = r.id_usuario AND u.eliminado = 0" +
                     "WHERE r.id_supervisor = @s"
                 );
 
@@ -93,6 +93,16 @@ namespace Negocio
             }
 
             return lista;
+        }
+
+        public void BorrarAsignados(int idSupervisor)
+        {
+            using (AccesoDatos datos = new AccesoDatos())
+            {
+                datos.DefinirConsulta("DELETE FROM usuarios_relacionados WHERE id_supervisor = @s");
+                datos.AgregarParametro("@s", idSupervisor, SqlDbType.Int);
+                datos.EjecutarAccion();
+            }
         }
     }
 }

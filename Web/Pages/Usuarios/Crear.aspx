@@ -5,6 +5,9 @@
 <asp:Content ID="ContenidoCrear" ContentPlaceHolderID="MainContent" runat="server">
 
     <h3 class="fw-bold mb-4">Crear usuario</h3>
+    
+    <asp:Label ID="ErrorCrear" runat="server"
+           CssClass="text-danger fw-bold d-block mb-3"></asp:Label>
 
     <div class="row g-3">
 
@@ -25,7 +28,7 @@
 
         <div class="col-12 mt-3">
         <div class="alert alert-info d-inline-block p-2">
-            La contraseña inicial será: <strong>gestiondeturnos</strong>
+            La contraseña inicial será: <strong>gestiondetareas</strong>
         </div>
         </div>
 

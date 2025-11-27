@@ -24,7 +24,6 @@
             <asp:DropDownList ID="SelectUsuarioAsignado" runat="server" CssClass="form-select"></asp:DropDownList>
         </div>
 
-        <!-- DESCRIPCIÓN -->
         <div class="col-md-6">
             <label class="form-label">Descripción <span class="text-danger">*</span></label>
             <asp:TextBox ID="TextoDescripcion" runat="server"

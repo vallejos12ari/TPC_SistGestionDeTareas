@@ -5,19 +5,24 @@
 <asp:Content ID="ContenidoFlujo" ContentPlaceHolderID="MainContent" runat="server">
 
     <p class="fw-bold fs-3">Flujo de Estados</p>
+    
+    <p class="fs-5 text-muted">En los estados iniciales y de origen, solo se listan los que no son finales.</p>
 
     <asp:Label ID="ErrorFlujo" runat="server" CssClass="text-danger fw-bold d-block mb-3"></asp:Label>
-    
-      <div class="col-4">
-            <label class="form-label">Estado inicial</label>
-            <asp:DropDownList ID="SelectInicial" runat="server"
-                              CssClass="form-select"
-                              AutoPostBack="true"
-                              OnSelectedIndexChanged="SelectInicial_SelectedIndexChanged">
-            </asp:DropDownList>
-        </div>
 
     <div class="row mb-4">
+            <div class="col-4">
+                <label class="form-label">Estado inicial</label>
+                <asp:DropDownList ID="SelectInicial" runat="server"
+                                  CssClass="form-select"
+                                  AutoPostBack="true"
+                                  OnSelectedIndexChanged="SelectInicial_SelectedIndexChanged">
+                </asp:DropDownList>
+            </div>
+    </div>
+    
+    <div class="row mb-4">
+        
         <div class="col-4">
             <label class="form-label">Estado origen</label>
             <asp:DropDownList ID="SelectOrigen" runat="server" CssClass="form-select"></asp:DropDownList>

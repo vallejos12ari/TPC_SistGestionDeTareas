@@ -29,6 +29,7 @@ namespace Web.Pages.Tareas
             {
                 CargarTarea();
                 CargarComentarios();
+                CargarHistorial();
             }
         }
 
@@ -63,6 +64,13 @@ namespace Web.Pages.Tareas
             Usuario usuario = usuarioNegocio.BuscarPorId(t.UsuarioId);
             List<Imagen> imagenes = imagenNegocio.BuscarPorTarea(t.Id);
 
+            PanelCambiarEstado.Visible = t.UsuarioId == UsuarioIdActual() || t.CreadoPor == UsuarioIdActual();
+            
+            if (estado.EsFinal == 1)
+            {
+                PanelCambiarEstado.Visible = false;
+            }
+            
             if (t.TipoRelacionId.HasValue)
             {
                 TipoRelacion tipoRelacion = tipoRelacionNegocio.BuscarPorId(t.TipoRelacionId.Value);
@@ -90,7 +98,7 @@ namespace Web.Pages.Tareas
 
             LblTitulo.InnerText = t.Titulo;
             LblDescripcion.Text = t.Descripcion;
-            
+
             LblUsuarioCreador.Text = usuarioNegocio.BuscarPorId(t.CreadoPor).Nombre;
 
             LblEstado.InnerHtml = "<span style='color:" + estado.Color + "'>" + estado.Nombre + "</span>";
@@ -116,19 +124,20 @@ namespace Web.Pages.Tareas
 
             string rol = RolUsuario();
             bool esAdmin = rol == "ADMIN" || rol == "SUPERVISOR";
+            bool esSupervisorYCreador = rol == "SUPERVISOR" && t.CreadoPor != UsuarioIdActual();
 
-            PanelAccionesAdmin.Visible = esAdmin;
+            PanelAccionesAdmin.Visible = esAdmin && estado.EsFinal == 0;
 
-            if (esAdmin)
+            if (esAdmin || esSupervisorYCreador)
             {
                 BotonEditar.HRef = "Editar.aspx?id=" + t.Id;
             }
-            
+
             int? usuarioIdActual = UsuarioIdActual();
             bool esAsignado = usuarioIdActual.HasValue && usuarioIdActual.Value == usuario.Id;
 
-            PanelAgregarHoras.Visible = esAsignado;
-            
+            PanelAgregarHoras.Visible = esAsignado && estado.EsFinal == 0;
+
             HoraNegocio horaNegocio = new HoraNegocio();
             List<Hora> horas = horaNegocio.ListarPorTarea(t.Id);
 
@@ -151,7 +160,7 @@ namespace Web.Pages.Tareas
                 LblHorasCargadas.Attributes["class"] = "text-muted";
                 LblHorasCargadas.Attributes["onclick"] = "";
             }
-            
+
             List<object> listaHoras = new List<object>();
 
             foreach (Hora h in horas)
@@ -169,7 +178,7 @@ namespace Web.Pages.Tareas
             RepeaterHorasCargadas.DataSource = listaHoras;
             RepeaterHorasCargadas.DataBind();
         }
-        
+
         private void CargarEstadosPosibles(int estadoActualId)
         {
             EstadoNegocio estadoNegocio = new EstadoNegocio();
@@ -184,7 +193,8 @@ namespace Web.Pages.Tareas
                 SelectNuevoEstado.Enabled = false;
                 SelectNuevoEstado.Items.Add(new System.Web.UI.WebControls.ListItem("No hay estados disponibles", ""));
                 BotonConfirmarCambioEstado.Enabled = false;
-            } else 
+            }
+            else
             {
                 foreach (var est in siguientes)
                     SelectNuevoEstado.Items.Add(new ListItem(est.Nombre, est.Id.ToString()));
@@ -204,15 +214,31 @@ namespace Web.Pages.Tareas
             int idTarea = int.Parse(Request.QueryString["id"]);
             int nuevoEstadoId = int.Parse(SelectNuevoEstado.SelectedValue);
 
+            EstadoNegocio estadoNegocio = new EstadoNegocio();
+            
             Tarea t = tareaNegocio.BuscarPorId(idTarea);
 
-            t.EstadoId = nuevoEstadoId;
 
+            HistorialNegocio historialNegocio = new HistorialNegocio();
+            Historial historial = new Historial();
+            string estadoAnterior = "Estado " + (estadoNegocio.BuscarPorId(t.EstadoId)).Nombre;
+            string estadoNuevo = "Estado " + (estadoNegocio.BuscarPorId(nuevoEstadoId)).Nombre;
+            t.EstadoId = nuevoEstadoId;
             tareaNegocio.Modificar(t);
+
+            if (estadoAnterior != estadoNuevo)
+            {
+                historial.UsuarioId = UsuarioIdActual() ?? 0;
+                historial.TareaId = t.Id;
+                historial.ValorAnterior = estadoAnterior;
+                historial.ValorNuevo = estadoNuevo;
+                historialNegocio.Agregar(historial);
+                t.EstadoId = nuevoEstadoId;
+            }
 
             Response.Redirect(Request.RawUrl);
         }
-        
+
         protected void ClickAgregarHoras(object sender, EventArgs e)
         {
             string texto = InputHoras.Text.Trim();
@@ -326,7 +352,7 @@ namespace Web.Pages.Tareas
                 CargarComentarios();
             }
         }
-        
+
         protected void OnItemDataBoundComentario(object sender, RepeaterItemEventArgs e)
         {
             if (e.Item.ItemType != ListItemType.Item &&
@@ -350,7 +376,7 @@ namespace Web.Pages.Tareas
                     boton.Visible = false;
             }
         }
-        
+
         protected void ClickEliminarComentarioConfirmado(object sender, EventArgs e)
         {
             string valor = HiddenComentarioId.Value;
@@ -373,6 +399,30 @@ namespace Web.Pages.Tareas
             CargarComentarios();
         }
 
+        private void CargarHistorial()
+        {
+            int id = int.Parse(Request.QueryString["id"]);
+            HistorialNegocio historialNegocio = new HistorialNegocio();
+            UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+
+            var lista = new List<object>();
+
+            foreach (Historial h in historialNegocio.ListarPorTarea(id))
+            {
+                Usuario u = usuarioNegocio.BuscarPorId(h.UsuarioId);
+
+                lista.Add(new
+                {
+                    UsuarioNombre = u != null ? u.Nombre : "Usuario eliminado",
+                    ValorAnterior = h.ValorAnterior,
+                    ValorNuevo = h.ValorNuevo,
+                    Fecha = h.Fecha
+                });
+            }
+
+            RepeaterHistorial.DataSource = lista;
+            RepeaterHistorial.DataBind();
+        }
 
 
         protected void ClickEliminar(object sender, EventArgs e)

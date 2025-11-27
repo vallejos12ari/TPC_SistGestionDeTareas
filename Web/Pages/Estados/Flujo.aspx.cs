@@ -30,10 +30,27 @@ namespace Web.Pages.Estados
 
             foreach (Estado e in estados)
             {
-                SelectOrigen.Items.Add(new ListItem(e.Nombre, e.Id.ToString()));
+                if (e.EsFinal == 0)
+                {
+                    SelectOrigen.Items.Add(new ListItem(e.Nombre, e.Id.ToString()));
+                    SelectInicial.Items.Add(new ListItem(e.Nombre, e.Id.ToString()));
+                }
+                
                 SelectDestino.Items.Add(new ListItem(e.Nombre, e.Id.ToString()));
-                SelectInicial.Items.Add(new ListItem(e.Nombre, e.Id.ToString()));
             }
+
+            Estado estadoInicial = estadoNegocio.BuscarInicial();
+
+            if (estadoInicial != null)
+            {
+                SelectInicial.SelectedValue = estadoInicial.Id.ToString();
+            }
+            else
+            {
+                SelectInicial.Items.Add(new ListItem("", ""));
+                SelectInicial.SelectedValue = "";
+            }
+
         }
         
         protected void SelectInicial_SelectedIndexChanged(object sender, EventArgs e)
@@ -48,8 +65,6 @@ namespace Web.Pages.Estados
 
             CargarFlujos(); 
         }
-
-        
 
         private void CargarFlujos()
         {

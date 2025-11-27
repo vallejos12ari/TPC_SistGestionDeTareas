@@ -29,6 +29,12 @@
                     <div style='width: 20px; height: 20px; border-radius: 4px; border: 1px solid #ccc; background-color:<%# Eval("Color") %>'></div>
                 </ItemTemplate>
             </asp:TemplateField>
+            
+            <asp:TemplateField HeaderText="Estado final">
+                                  <ItemTemplate>
+                                      <p><%# (byte)Eval("EsFinal") == 1 ? "Si" : "No" %></p>
+                                  </ItemTemplate>
+                              </asp:TemplateField>
 
             <asp:TemplateField HeaderText="Acciones">
                 <ItemTemplate>
@@ -45,9 +51,7 @@
 
                 </ItemTemplate>
             </asp:TemplateField>
-
         </Columns>
-
     </asp:GridView>
 
     <div class="modal fade" id="ModalEliminar" tabindex="-1">
