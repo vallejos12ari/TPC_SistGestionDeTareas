@@ -2,6 +2,7 @@
 using Negocio;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Web.Pages.Usuarios
 {
@@ -19,6 +20,11 @@ namespace Web.Pages.Usuarios
         {
             UsuarioNegocio negocioUsuarios = new UsuarioNegocio();
             List<Usuario> listaUsuarios = negocioUsuarios.Listar();
+
+            listaUsuarios = listaUsuarios
+                .Where(u => u.Id != 0)
+                .ToList();
+
             TablaUsuarios.DataSource = listaUsuarios;
             TablaUsuarios.DataBind();
         }

@@ -21,6 +21,11 @@ namespace Web.Pages.Usuarios
                 return;
             }
 
+            if (Request.QueryString["id"] == "0")
+            {
+                Response.Redirect("Listar.aspx");
+            }
+
             IdUsuario = int.Parse(Request.QueryString["id"]);
             IdUsuarioHidden.Value = IdUsuario.ToString();
 
